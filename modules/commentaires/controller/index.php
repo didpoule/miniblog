@@ -1,5 +1,5 @@
 <?php
-$nbCommentairesPage = 2;
+$nbCommentairesPage = 10;
 $offset = 0;
 if(isset($_GET['billet']) && isset($_POST['pseudo']) && isset($_POST['contenu']))
 {

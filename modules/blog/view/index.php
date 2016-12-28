@@ -8,7 +8,7 @@
 
 <body>
 <h1>Mon super blog !</h1>
-<?php if($page == 0) { echo '<h2> .Derniers billets du blog :</h2>'; } ?>
+<?php if($page == 0) { echo '<h2>Derniers billets du blog :</h2>'; } ?>
 
 <?php
 foreach ($billets as $billet) {
@@ -30,7 +30,7 @@ foreach ($billets as $billet) {
     <nav>
         <p>Pages: <?php
             for($i = 0; $i < $nbPages; $i++) {
-                echo '<ul><a href ="?page=' . $i . '">' . $i . '</a></ul>';
+                echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
             }
             ?></p>
     </nav>

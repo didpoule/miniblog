@@ -7,50 +7,63 @@
 </head>
 
 <body>
-<article class="news">
-    <h3>
-        <?php echo $billet['titre']; ?>
-        <em>le <?php echo $billet['date_creation_fr']; ?></em>
-    </h3>
+    <div class="billet">
+        <article>
+            <h3>
+                <?php echo $billet['titre']; ?>
+                <em>le <?php echo $billet['date_creation_fr']; ?></em>
+            </h3>
 
-    <p>
-        <?php echo $billet['contenu']; ?>
-    </p>
-</article>
-<?php
-foreach ($commentaires as $commentaire) {
-    ?>
-    <div class="commentaire">
-        <h3>
-            <?php echo $commentaire['pseudo']; ?>
-            <em>le <?php echo $commentaire['date_creation_fr']; ?></em>
-        </h3>
-
-        <p>
-            <?php echo $commentaire['contenu']; ?>
-            <br/>
-        </p>
+            <p>
+                <?php echo $billet['contenu']; ?>
+            </p>
+        </article>
     </div>
-
-    <?php
-}
-
-?>
-<div class = "page_select">
-    <nav>
-        <p>Pages: <?php
-        for($i = 0; $i < $nbPages; $i++) {
-            echo '<ul><a href ="?section=commentaires&billet=' . $billet['id'] . '&pageCom=' . $i . '">' . $i . '</a></ul>';
+    <section id="Commentaires">
+        <h3>Commentaires: </h3>
+        <?php
+        if ($nbCommentaires == 0) {
+            echo '<p>Pas encore de commentaires...</p>';
         }
-            ?></p>
-    </nav>
-</div>
-    <h3>Ajouter un commentaire</h3>
-    <form id="new_com" method="post" action="../../../blog.php?section=commentaires&billet=<?= $billet['id']?>">
-        <input type="text" name="pseudo" id="pseudo" placeholder="Entrez votre pseudo" /><br />
-        <textarea name="contenu" id="contenu" placeholder="Ecrivez votre commenataire"></textarea><br />
-        <input type="submit" name="envoyer" id="envoyer" />
-    </form>
+
+
+        foreach ($commentaires as $commentaire) {
+        ?>
+        <div class="commentaire">
+            <h4>
+                <?php echo $commentaire['pseudo']; ?>
+                <em>le <?php echo $commentaire['date_creation_fr']; ?></em>
+            </h4>
+
+            <p>
+                <?php echo $commentaire['contenu']; ?>
+                <br/>
+            </p>
+        </div>
+
+        <?php
+        }
+    if ($nbPages > 1) { ?>
+
+            <nav class = "page_select">
+                <p><span>Pages: </span>
+                <?php
+                    for ($i = 0; $i < $nbPages; $i++) {
+                        echo '<ul><a href ="?section=commentaires&billet=' . $billet['id'] . '&pageCom=' . $i . '">' . $i . '</a>/</ul>';
+                    }
+                ?></p>
+        </nav>
+    <?php } ?>
+            <h3>Ajouter un commentaire: </h3>
+            <form id="new_com" method="post" action="../../../blog.php?section=commentaires&billet=<?= $billet['id'] ?>">
+                <input type="text" name="pseudo" id="pseudo" placeholder="Entrez votre pseudo"/><br/>
+                <textarea name="contenu" id="contenu" placeholder="Ecrivez votre commenataire"></textarea><br/>
+                <input type="submit" name="envoyer" id="envoyer"/>
+            </form>
+
+        </section>
+
+
 </body>
 </html>
 

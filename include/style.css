@@ -20,23 +20,62 @@ h1
 h2
 {
     text-align: left;
-    margin-left: 1em;
-    margin-bottom: .5em;
+    margin-left: 25%;
+    margin-bottom: 1em;
 }
 
-.news
+
+.billet
+{
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 1em;
+
+}
+.billet h3
+{
+    background-color: black;
+    color: whitesmoke;
+}
+.billet p
 {
     text-align: left;
-    margin-left: 1.5em;
-    margin-bottom: 1em;
+    background-color: whitesmoke;
+    color: black;
+}
+.commentaire h4
+{
+    margin-left: 1em;
 }
 .page_select
 {
     width: 10%;
     margin: 0 auto;
+    margin-top: 100px;
 }
 nav
 {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
+}
+section
+{
+    text-align: left;
+    margin-left: 10%;
+    margin-bottom: 1em;
+}
+
+section p
+{
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+#Commentaires .page_select
+{
+    margin: 0;
+    text-align: left;
+}
+span
+{
+    text-align: left;
 }

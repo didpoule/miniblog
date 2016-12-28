@@ -1,12 +1,13 @@
 <?php
 
-// On demande les 5 derniers billets (modèle)
+// Inclusions et définitions des variables
 include_once('include/functions.php');
 include_once('modules/blog/model/get_billets.php');
 $offset = 0;
-$nbBilletsPage = 2;
+$nbBilletsPage = 5;
 $nbBillets = get_nbBillets();
 $nbPages = calc_nbPages($nbBillets, $nbBilletsPage);
+$page = 0;
 
 if(isset($_GET['page']))
 {
