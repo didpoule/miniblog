@@ -7,33 +7,20 @@
 </head>
 
 <body>
-<h1>Mon super blog !</h1>
-<?php if($page == 0) { echo '<h2>Derniers billets du blog :</h2>'; } ?>
-
-<?php
-foreach ($billets as $billet) {
-    ?>
-    <div class="news">
-        <h3>
-            <?php echo $billet['titre']; ?>
-            <em>le <?php echo $billet['date_creation_fr']; ?></em>
-        </h3>
-        <p>
-            <?php echo ($billet['contenu']); ?><br />
-            <em><a href="?section=commentaires&billet=<?= $billet['id'] ?>">Commentaires</a></em>
-        </p>
+    <div id ="corps_page">
+        <?php
+        include 'header.php';
+        include 'billet.php';
+        ?>
+        <div class = "page_select">
+            <nav>
+                <p>Pages: <?php
+                    for($i = 0; $i < $nbPages; $i++) {
+                        echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
+                    }
+                    ?></p>
+            </nav>
+        </div>
     </div>
-    <?php
-}
-?>
-<div class = "page_select">
-    <nav>
-        <p>Pages: <?php
-            for($i = 0; $i < $nbPages; $i++) {
-                echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
-            }
-            ?></p>
-    </nav>
-</div>
 </body>
 </html>

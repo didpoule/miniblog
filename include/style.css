@@ -7,45 +7,102 @@ html, body, div, section, article, nav, h1, h2, h3, em, p, li, ul, a
 
 body
 {
-    text-align: center;
-    width: 75%;
+    width: 100%;
+    margin: 0 auto;
+    background-color: lightslategrey;
 
 }
 
 h1
 {
+    font-size: 2em;
     margin-bottom: .5em;
 }
 
 h2
 {
-    text-align: left;
-    margin-left: 25%;
-    margin-bottom: 1em;
+    font-size: 1.5em;
 }
 
-
-.billet
+p
 {
-    width: 50%;
+    font-size: 1em;
+}
+section h1
+{
+    font-size: 1.5em;
+    padding-left: .5em;
+}
+#corps_page
+{
     margin: 0 auto;
-    margin-bottom: 1em;
+    width: 50%;
+    margin-top: 1em;
+    background-color: ghostwhite;
+}
+
+#corps_page h1
+{
+    margin-left: .7em;
+    padding-top: 1em;
+}
+#header_image {
+    margin: 0 auto;
+    background-size: cover;
+    background-image: url('images/header.jpg');
+    max-width: 95%;
+    height: 200px;
+    margin-bottom: 2em;
 
 }
-.billet h3
-{
-    background-color: black;
-    color: whitesmoke;
-}
-.billet p
+.news
 {
     text-align: left;
-    background-color: whitesmoke;
-    color: black;
+    width: 95%;
+    padding-left: 2em;
 }
-.commentaire h4
+.date_publication
 {
-    margin-left: 1em;
+    font-size: .9em;
+    font-style: oblique;
+    color: darkgrey;
+    padding-left: .5em;
+    margin-bottom: 0;
+}
+.contenu_billet, .contenu_billet a
+{
+    padding-left: .5em;
+}
+.news p
+{
+    margin-bottom: 1em;
+}
+
+.commentaire
+{
+    text-align: left;
+    width: 95%;
+    padding-left: 2em;
+}
+
+.commentaire h2
+{
+    font-size: 1em;
+}
+.commentaire .sous_titre
+{
+    font-weight: normal;
+    font-style: oblique;
+    padding: 0;
+}
+.commentaire
+{
+    margin-bottom: 2em;
+}
+.commentaire p
+{
+    margin-bottom: 1em;
+    padding-left: 1em;
 }
 .page_select
 {
@@ -58,18 +115,7 @@ nav
     display: flex;
     justify-content: flex-start;
 }
-section
-{
-    text-align: left;
-    margin-left: 10%;
-    margin-bottom: 1em;
-}
 
-section p
-{
-    margin-left: 1em;
-    margin-bottom: 1em;
-}
 #Commentaires .page_select
 {
     margin: 0;
