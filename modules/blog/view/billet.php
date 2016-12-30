@@ -1,5 +1,6 @@
 <section>
     <?php
+    // Todo: Afficher nom de l'auteur du billet
     if(!isset($_GET['section'])) {
         foreach ($billets as $billet) {
             ?>

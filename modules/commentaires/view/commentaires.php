@@ -1,6 +1,7 @@
 <section>
     <h1>Commentaires: </h1>
     <?php
+    // Todo: Afficher gravatar
     if ($nbCommentaires == 0) {
         echo '<p>Pas encore de commentaires...</p>';
     }

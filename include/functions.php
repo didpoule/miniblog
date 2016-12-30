@@ -3,8 +3,6 @@ function calc_nbPages($nbElement, $nbElementPage)
 {
     $nbPages = $nbElement / $nbElementPage;
     $nbPages= ceil($nbPages);
-
-
     return $nbPages;
 }
 

@@ -1,13 +1,17 @@
 <?php
+/* Todo: Créer fonction pour récupérer gravatar à partir de l'adresse mail saisie
+   Todo: Enregistrer adresse mail et pseudo de l'utilisateur */
 $nbCommentairesPage = 10;
 $offset = 0;
 if(isset($_GET['billet']) && isset($_POST['pseudo']) && isset($_POST['contenu']))
 {
-    include_once('modules/commentaires/model/new_commentaire.php');
-    $billet = htmlspecialchars($_GET['billet']);
-    $pseudo =  htmlspecialchars($_POST['pseudo']);
-    $contenu =  htmlspecialchars($_POST['contenu']);
-    new_commentaire($billet,$pseudo,$contenu);
+    if(!empty($_POST['pseudo']) && !empty($_POST['contenu'])) {
+        include_once('modules/commentaires/model/new_commentaire.php');
+        $billet = htmlspecialchars($_GET['billet']);
+        $pseudo =  htmlspecialchars($_POST['pseudo']);
+        $contenu =  htmlspecialchars($_POST['contenu']);
+        new_commentaire($billet,$pseudo,$contenu);
+    }
 }
 
 // On demande les commentaires (modèle)

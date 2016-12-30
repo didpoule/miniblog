@@ -11,6 +11,8 @@
         <?php
         include 'header.php';
         include 'billet.php';
+        if ($nbPages > 1)
+        {
         ?>
         <div class = "page_select">
             <nav>
@@ -21,6 +23,10 @@
                     ?></p>
             </nav>
         </div>
+        <?php
+        }
+        include 'footer.php';
+        ?>
     </div>
 </body>
 </html>

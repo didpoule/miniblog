@@ -1,5 +1,4 @@
 <?php
-
 // Inclusions et définitions des variables
 include_once('include/functions.php');
 include_once('modules/blog/model/get_billets.php');

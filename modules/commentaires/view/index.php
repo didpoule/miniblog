@@ -28,12 +28,13 @@
         <section>
             <h1>Ajouter un commentaire: </h1>
             <form id="new_com" method="post" action="../../../blog.php?section=commentaires&billet=<?= $billet['id'] ?>">
-                <input type="text" name="pseudo" id="pseudo" placeholder="Entrez votre pseudo"/><br/>
-                <textarea name="contenu" id="contenu" placeholder="Ecrivez votre commenataire"></textarea><br/>
-                <input type="submit" name="envoyer" id="envoyer"/>
+                <label for="pseudo">Pseudo: </label><input type="text" name="pseudo" id="pseudo"/><br/>
+                <label for="email">Email: </label><input type="email" name="email" id="email"/><br />
+                <label for="contenu">Votre commentaire: *</label><textarea name="contenu" id="contenu"></textarea><br/>
+                <input type="submit" name="envoyer" id="envoyer" value="Envoyer"/>
             </form>
         </section>
-
+    <?php include 'modules/blog/view/footer.php'; ?>
 
     </div>
 </body>

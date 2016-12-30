@@ -1,8 +1,5 @@
 <?php
-/**
- * @param $nbBilletsPage
- * @return mixed
- */
+// Todo: modifier requètes pour récupérer le nom de l'auteur
 function get_nbBillets()
 {
     global $bdd;

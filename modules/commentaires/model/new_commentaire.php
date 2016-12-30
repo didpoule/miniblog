@@ -1,4 +1,7 @@
 <?php
+// Todo: Modifier requète pour ajouter l'email si renseigné
+// Todo: Utiliser "invité" comme pseudo si champ vide
+
 function new_commentaire($billet, $pseudo, $contenu)
 {
     global $bdd;
