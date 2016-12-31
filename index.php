@@ -1,6 +1,6 @@
 <?php
 
-include_once('include/connexion_sql.php');
+include_once('include/sql.php');
 include_once('include/functions.php');
 
 if(isset($_GET['section']))
