@@ -1,12 +1,13 @@
 <?php
 
 include_once('include/connexion_sql.php');
+include_once('include/functions.php');
 
 if(isset($_GET['section']))
 {
     if ($_GET['section'] == 'commentaires')
     {
-        include ('modules/commentaires/controller/index.php');
+        include ('modules/blog/controller/commentaires.php');
     }
 
 }

@@ -1,7 +1,6 @@
 <?php
 // Inclusions et définitions des variables
-include_once('include/functions.php');
-include_once('modules/blog/model/get_billets.php');
+include_once('modules/blog/model/billets.php');
 $offset = 0;
 $nbBilletsPage = 5;
 $nbBillets = get_nbBillets();
