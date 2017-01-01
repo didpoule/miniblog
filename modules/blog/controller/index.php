@@ -1,5 +1,5 @@
 <?php
-// Inclusions et définitions des variables
+// Include et Définitions des variables
 include_once('modules/blog/model/billets.php');
 $offset = 0;
 $nbBilletsPage = 5;
@@ -7,20 +7,18 @@ $nbBillets = get_nbBillets();
 $nbPages = calc_nbPages($nbBillets, $nbBilletsPage);
 $page = 0;
 
+// Gestion de la pagination
 if(isset($_GET['page']))
 {
     $page = htmlspecialchars($_GET['page']);
     $offset = donnees_page($page, $nbPages, $nbBilletsPage);
 }
-
+// Récupération de la liste des billets
 $billets = get_billets($offset, $nbBilletsPage);
-
-// On effectue du traitement sur les données (contrôleur)
-// Ici, on doit surtout sécuriser l'affichage
 foreach ($billets as $cle => $billet) {
     $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
     $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
 }
 
-// On affiche la page (vue)
+// Affichage
 include_once('modules/blog/view/index.php');

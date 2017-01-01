@@ -1,5 +1,7 @@
 <?php
 // Todo: modifier requètes pour récupérer le nom de l'auteur
+
+// Récupération du nombre de billets
 function get_nbBillets()
 {
     global $bdd;
@@ -10,6 +12,8 @@ function get_nbBillets()
 
     return $nbBillets;
 }
+
+// Récupération des billets dans un tableau
 function get_billets($offset, $nbBilletsPage)
 {
     global $bdd;
@@ -27,6 +31,7 @@ function get_billets($offset, $nbBilletsPage)
     return $billets;
 }
 
+// Récuparation d'un seul billet grâce à son ID
 function get_billet($id_billet)
 {
     global $bdd;

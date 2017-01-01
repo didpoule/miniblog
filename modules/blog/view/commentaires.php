@@ -23,16 +23,15 @@
         foreach ($commentaires as $commentaire) {
             ?>
             <div class="commentaire">
+                <div class="avatar"><?= $commentaire['gravatar'] ?></div>
                 <h2><?php echo $commentaire['pseudo']; ?><span class="sous_titre"> dit:</span> </h2>
-
-
                 <p>
                 <span class="date_publication">
                     <em>le <?php echo $commentaire['date_creation_fr']; ?></em>
                 </span>
                 </p>
                 <p>
-                    <?php echo $commentaire['contenu']; ?>
+                    <?php echo $commentaire['contenu'];?>
                 </p>
 
             </div>

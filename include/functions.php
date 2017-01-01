@@ -1,4 +1,6 @@
 <?php
+
+// Retourne nombre de pages
 function calc_nbPages($nbElement, $nbElementPage)
 {
     $nbPages = $nbElement / $nbElementPage;
@@ -6,6 +8,7 @@ function calc_nbPages($nbElement, $nbElementPage)
     return $nbPages;
 }
 
+// Définit les paramètres OFFSET et LIMIT pour pagination
 function donnees_page($page, $nbPages, $nbElementPage)
 {
     $page = htmlspecialchars($page);
@@ -23,7 +26,19 @@ function donnees_page($page, $nbPages, $nbElementPage)
     return $offset;
 }
 
-function get_gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() ) {
+// Vérification de la validité de l'adresse mail, retourne NULL si invalide
+function verifEmail($email)
+{
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+    {
+        $email = NULL;
+    }
+    return $email;
+}
+
+// Récupération du gravatar grâce à l'email, renvoie un avatar par défaut si non existant
+function get_gravatar( $email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts = array() ) {
     $url = 'https://www.gravatar.com/avatar/';
     $url .= md5( strtolower( trim( $email ) ) );
     $url .= "?s=$s&d=$d&r=$r";

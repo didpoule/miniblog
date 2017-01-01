@@ -105,6 +105,10 @@ section h1
     width: 95%;
     padding-left: 2em;
 }
+.avatar
+{
+    float: left;
+}
 
 .commentaire h2
 {

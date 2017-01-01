@@ -1,4 +1,6 @@
 <?php
+
+// Récupération nombre de commentaires
 function get_nbCommentaires($billet)
 {
     global $bdd;
@@ -6,36 +8,72 @@ function get_nbCommentaires($billet)
     $req->execute(array($billet));
     $donnees = $req->fetch();
     $nbCommentaires = $donnees['nbCommentaires'];
-
+    $req->closeCursor();
     return $nbCommentaires;
 }
+
+// Récupération de la liste des commentaires dans un tableau
 function get_commentaires($billet, $offset, $nbCommentairesPage)
 {
     global $bdd;
     $billet = (int)$billet;
-    $req = $bdd->prepare('SELECT id, pseudo, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr 
-                          FROM commentaires WHERE id_billet = :billet ORDER BY date_creation DESC LIMIT :offset, :limit');
+        $req = $bdd->prepare('SELECT c.id, c.id_auteur, c.pseudo, u.email AS email, c.contenu, DATE_FORMAT(c.date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr 
+                          FROM commentaires c LEFT JOIN utilisateurs u ON u.id = c.id_auteur
+                          WHERE c.id_billet = :billet ORDER BY c.date_creation DESC LIMIT :offset, :limit');
     $req->bindParam(':billet', $billet, PDO::PARAM_INT);
     $req->bindParam(':offset', $offset, PDO::PARAM_INT);
     $req->bindParam(':limit', $nbCommentairesPage, PDO::PARAM_INT);
     $req->execute();
     $commentaires = $req->fetchAll();
-
-
+    $req->closeCursor();
     return $commentaires;
 }
-// Todo: Modifier requète pour ajouter l'email si renseigné
-// Todo: Utiliser "invité" comme pseudo si champ vide
 
-function new_commentaire($billet, $pseudo, $contenu)
+// Ecriture d'un commentaire dans BDD
+function new_commentaire($billet, $pseudo, $contenu, $idAuteur)
 {
     global $bdd;
     $billet = (int)$billet;
-    $req = $bdd->prepare ('INSERT INTO commentaires(id_billet, pseudo, contenu, date_creation)
-                                      VALUES(:id_billet, :pseudo, :contenu, NOW())');
+    if($pseudo == NULL) $pseudo = 'invité';
+    $req = $bdd->prepare ('INSERT INTO commentaires(id_billet, id_auteur, pseudo, contenu, date_creation)
+                                      VALUES(:id_billet, :idAuteur, :pseudo, :contenu, NOW())');
 
     $req->bindParam(':id_billet', $billet, PDO::PARAM_INT);
+    $req->bindParam(':idAuteur', $idAuteur, PDO::PARAM_INT);
     $req->bindParam(':pseudo', $pseudo);
     $req->bindParam(':contenu', $contenu);
     $req->execute();
+    $req->closeCursor();
+}
+// Récupération de l'id de l'auteur du commentaire si son adresse mail est renseignée
+function getIduser($email)
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT id FROM utilisateurs WHERE email = :email');
+    $req->bindParam(':email', $email, PDO::PARAM_STR);
+    $req->execute();
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees['id'];
+}
+// Récupération de l'email de l'utilisateur grâce à son id
+function getEmailuser($id)
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT email FROM utilisateurs WHERE id = :id');
+    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees['email'];
+}
+// Création d'un utilisateur si adresse mail valide pour utilisation gravatar
+function createUser($email, $nom = NULL)
+{
+    global $bdd;
+    $req = $bdd->prepare('INSERT INTO utilisateurs(nom, email)
+                                     VALUES(:nom, :email)');
+    $req->bindParam(':nom', $nom, PDO::PARAM_STR);
+    $req->bindParam(':email', $email, PDO::PARAM_STR);
+    $req->execute();
+    $req->closeCursor();
 }
