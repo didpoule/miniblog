@@ -16,7 +16,7 @@
         <?php
         // Todo: Afficher gravatar
         if ($nbCommentaires == 0) {
-            echo '<p>Pas encore de commentaires...</p>';
+            echo '<div class="commentaire"><p>Pas encore de commentaires...</p></div>';
         }
 
 

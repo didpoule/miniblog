@@ -26,8 +26,8 @@ if(isset($_GET['billet']))
 {
     if(!empty($_POST['contenu'])) {
         $billet = htmlspecialchars($_GET['billet']);
-        $pseudo =  htmlspecialchars($_POST['pseudo']);
-        $contenu =  htmlspecialchars($_POST['contenu']);
+        $pseudo =  $_POST['pseudo'];
+        $contenu =  $_POST['contenu'];
         new_commentaire($billet,$pseudo,$contenu, $idAuteur);
     }
 }
@@ -48,8 +48,8 @@ if(isset($_GET['pageCom']))
 // Récupération des commentaires
 $commentaires = get_commentaires(htmlspecialchars($_GET['billet']), $offset, $nbCommentairesPage);
 foreach ($commentaires as $cle => $commentaire) {
-    $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo']);
-    $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu']));
+    $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo'], ENT_QUOTES);
+    $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
     $commentaires[$cle]['email'] = nl2br($commentaire['email']);
     $commentaires[$cle]['gravatar'] = nl2br(get_gravatar($commentaire['email']));
 }
