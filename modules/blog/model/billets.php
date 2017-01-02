@@ -19,9 +19,9 @@ function get_billets($offset, $nbBilletsPage)
     global $bdd;
     $offset = (int)$offset;
     $nbBilletsPage = (int)$nbBilletsPage;
-
-    $req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr 
-                          FROM billets ORDER BY date_creation DESC LIMIT :offset, :limit');
+    $req = $bdd->prepare('SELECT b.id, b.titre, b.contenu, u.nom AS auteur, b.date_creation 
+                          FROM billets b LEFT JOIN utilisateurs u ON u.id = b.id_auteur
+                          ORDER BY date_creation DESC LIMIT :offset, :limit');
     $req->bindParam(':offset', $offset, PDO::PARAM_INT);
     $req->bindParam(':limit', $nbBilletsPage, PDO::PARAM_INT);
     $req->execute();
@@ -36,7 +36,9 @@ function get_billet($id_billet)
 {
     global $bdd;
     $id_billet = (int)$id_billet;
-    $req = $bdd->prepare('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM billets WHERE id = ?');
+    $req = $bdd->prepare('SELECT b.id, b.titre, b.contenu, u.nom AS auteur, b.date_creation 
+                                    FROM billets b LEFT JOIN utilisateurs u ON u.id = b.id_auteur
+                                    WHERE b.id = ?');
     $req->execute(array($id_billet));
     $billet = $req->fetch();
 

@@ -5,15 +5,15 @@
         foreach ($billets as $billet) {
             ?>
             <div class="news">
-                <h2><?php echo $billet['titre']; ?></h2>
+                <h2><?= $billet['titre']; ?></h2>
                 <p>
                         <span class="date_publication">
-                            Publié le <?php echo $billet['date_creation_fr']; ?>
+                            Publié le <?= $billet['date'] ?> par <?= $billet['auteur'] ?>
                         </span>
                 </p>
                 <p>
                         <span class="contenu_billet">
-                            <?php echo($billet['contenu']); ?><br/>
+                            <?= $billet['contenu'] ?><br/>
                                 <em><a href="?section=commentaires&billet=<?= $billet['id'] ?>">Commentaires</a></em>
                         </span>
                 </p>
@@ -25,15 +25,15 @@
     elseif($_GET['section'] == 'commentaires')
     { ?>
         <div class="news">
-            <h2><?php echo $billet['titre']; ?></h2>
+            <h2><?= $billet['titre'] ?></h2>
             <p>
             <span class="date_publication">
-                Publié le <?php echo $billet['date_creation_fr']; ?>
+                Publié le <?= $billet['date'] ?> par <?= $billet['auteur'] ?>
             </span>
             </p>
             <p>
             <span class="contenu_billet">
-                <?php echo($billet['contenu']); ?><br/>
+                <?= $billet['contenu'] ?><br/>
             </span>
             </p>
         </div>

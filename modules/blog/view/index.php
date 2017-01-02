@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Mon blog</title>
-    <link href="include/style.css" rel="stylesheet"/>
+    <link href="modules/blog/view/style.css" rel="stylesheet"/>
 </head>
 
 <body>

@@ -17,7 +17,7 @@ function get_commentaires($billet, $offset, $nbCommentairesPage)
 {
     global $bdd;
     $billet = (int)$billet;
-        $req = $bdd->prepare('SELECT c.id, c.id_auteur, c.pseudo, u.email AS email, c.contenu, DATE_FORMAT(c.date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr 
+        $req = $bdd->prepare('SELECT c.id, c.id_auteur, c.pseudo, u.email AS email, c.contenu, c.date_creation
                           FROM commentaires c LEFT JOIN utilisateurs u ON u.id = c.id_auteur
                           WHERE c.id_billet = :billet ORDER BY c.date_creation DESC LIMIT :offset, :limit');
     $req->bindParam(':billet', $billet, PDO::PARAM_INT);

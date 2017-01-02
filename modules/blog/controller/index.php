@@ -17,6 +17,8 @@ if(isset($_GET['page']))
 $billets = get_billets($offset, $nbBilletsPage);
 foreach ($billets as $cle => $billet) {
     $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
+    $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
+    $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
     $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
 }
 

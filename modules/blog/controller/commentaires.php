@@ -49,6 +49,7 @@ if(isset($_GET['pageCom']))
 $commentaires = get_commentaires(htmlspecialchars($_GET['billet']), $offset, $nbCommentairesPage);
 foreach ($commentaires as $cle => $commentaire) {
     $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo'], ENT_QUOTES);
+    $commentaires[$cle]['date'] = dateFr(htmlspecialchars($commentaire['date_creation']));
     $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
     $commentaires[$cle]['email'] = nl2br($commentaire['email']);
     $commentaires[$cle]['gravatar'] = nl2br(get_gravatar($commentaire['email']));
@@ -57,8 +58,9 @@ foreach ($commentaires as $cle => $commentaire) {
 
 include_once('modules/blog/model/billets.php');
 $billet = get_billet($_GET['billet']);
-
 $billet['titre'] = htmlspecialchars($billet['titre']);
+$billet['date'] = dateFr(htmlspecialchars($billet['date_creation']));
+$billet['auteur'] = htmlspecialchars($billet['auteur']);
 $billet['contenu'] = htmlspecialchars($billet['contenu']);
 $billet['id'] = (int)($billet['id']);
 

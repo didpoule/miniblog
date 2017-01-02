@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Commentaires</title>
-    <link href="include/style.css" rel="stylesheet"/>
+    <link href="modules/blog/view/style.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -24,14 +24,14 @@
             ?>
             <div class="commentaire">
                 <div class="avatar"><?= $commentaire['gravatar'] ?></div>
-                <h2><?php echo $commentaire['pseudo']; ?><span class="sous_titre"> dit:</span> </h2>
+                <h2><?= $commentaire['pseudo'] ?><span class="sous_titre"> dit:</span> </h2>
                 <p>
                 <span class="date_publication">
-                    <em>le <?php echo $commentaire['date_creation_fr']; ?></em>
+                    <em>le <?= $commentaire['date'] ?></em>
                 </span>
                 </p>
                 <p>
-                    <?php echo $commentaire['contenu'];?>
+                    <?= $commentaire['contenu']?>
                 </p>
 
             </div>

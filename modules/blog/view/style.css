@@ -49,7 +49,7 @@ section h1
 #header_image {
     margin: 0 auto;
     background-size: cover;
-    background-image: url('images/header.jpg');
+    background-image: url('../../../include/images/header.jpg');
     max-width: 95%;
     height: 200px;
     margin-bottom: 2em;
