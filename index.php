@@ -1,17 +1,27 @@
 <?php
-
-include_once('include/sql.php');
+session_start();
+if (!isset($_SESSION['admin'])) $_SESSION['admin'] = false;
+include_once('include/connexion_sql.php');
 include_once('include/functions.php');
 
 if(isset($_GET['section']))
 {
-    if ($_GET['section'] == 'commentaires')
+    switch($_GET['section'])
     {
-        include ('modules/blog/controller/commentaires.php');
-    }
+        case 'commentaires':
+            include ('modules/blog/controller/commentaires.php');
+            break;
 
+        case 'admin':
+            include('modules/admin/index.php');
+            break;
+
+        default:
+            include('error.php');
+            break;
+    }
 }
-else// (!isset($_GET['section']) OR $_GET['section'] == 'index')
+else
 {
     include_once('modules/blog/controller/index.php');
 }

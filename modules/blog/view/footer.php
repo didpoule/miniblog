@@ -3,8 +3,8 @@
         <section>
             <nav>
                 <ul>
-                    <li><a href="admin/admin.php">Aministration</a></li>
-                    <li><a href="admin/admin.php">Contact</a></li>
+                    <li><a href="?section=admin">Aministration</a></li>
+                    <li><a href="#">Contact</a></li>
                 <ul>
 
             </nav>

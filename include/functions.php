@@ -50,3 +50,49 @@ function get_gravatar( $email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts 
     }
     return $url;
 }
+
+// Fonctions de cryptage pour mots de passes. Sources www.stackoverflow.com
+
+function encrypt($pure_string, $encryption_key) {
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, $encryption_key, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
+    return $encrypted_string;
+}
+
+function decrypt($encrypted_string, $encryption_key) {
+    $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+    $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
+    return $decrypted_string;
+}
+
+// Vérification du mot de passe pour la connexion
+function controleLogin($user, $login, $password)
+{
+    $resultat = false;
+
+    if(empty($login) || empty($password))
+    {
+        return false;
+    }
+    else
+    {
+        $key = $login . $password;
+        $password = encrypt($password, $key);
+    }
+
+    if($login == $user['login'] && $password == $user['password'])
+    {
+        $resultat = true;
+    }
+    return $resultat;
+}
+
+function dateFr($date)
+{
+    $dateFr = new DateTime($date);
+    $dateFr = $dateFr->format('d/m/Y à H:i:s');
+
+    return $dateFr;
+}
