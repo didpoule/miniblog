@@ -8,7 +8,7 @@ $idAuteur = 0;
 // Vérification de la validité de l'adresse email & si déjà inscrit dans BDD
 if(!empty($_POST['email']))
 {
-    $nom =  htmlspecialchars($_POST['pseudo']);
+    $nom = htmlspecialchars($_POST['pseudo']);
     $email = verifEmail($_POST['email']);
     if($email != NULL)
     {
@@ -22,17 +22,14 @@ if(!empty($_POST['email']))
 }
 
 // Contrôle des informations envoyées par le formulaire
-if(isset($_GET['billet']))
-{
-    if(!empty($_POST['contenu'])) {
+if (isset($_GET['billet'])) {
+    if (!empty($_POST['contenu'])) {
         $billet = htmlspecialchars($_GET['billet']);
-        $pseudo =  $_POST['pseudo'];
-        $contenu =  $_POST['contenu'];
-        new_commentaire($billet,$pseudo,$contenu, $idAuteur);
+        $pseudo = $_POST['pseudo'];
+        $contenu = $_POST['contenu'];
+        new_commentaire($billet, $pseudo, $contenu, $idAuteur);
     }
 }
-
-
 
 
 // Gestion de la pagination

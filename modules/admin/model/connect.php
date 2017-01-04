@@ -3,13 +3,14 @@
 function getAdmin()
 {
     global $bdd;
-    $req = $bdd->query('SELECT login, password FROM admin WHERE id= 1');
+    $req = $bdd->query('SELECT login, email, password FROM admin WHERE id= 1');
 
     $donnees = $req->fetch();
 
     return $donnees;
 }
-/*function setAdmin($user, $pass)
+// Fonction pour définir un admin
+/*  function setAdmin($user, $pass)
 {
     global $bdd;
     $req = $bdd->prepare('INSERT INTO admin(login, password)

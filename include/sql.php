@@ -2,7 +2,7 @@
 /* Connexion à la base de données, modifier ce fichier pour vos essais */
 $DBHOST = 'localhost';
 $DBNAME = 'miniblog';
-$DBUSER= 'root';
+$DBUSER = 'root';
 $DBPASS = '';
 
 try {

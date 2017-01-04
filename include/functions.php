@@ -4,7 +4,7 @@
 function calc_nbPages($nbElement, $nbElementPage)
 {
     $nbPages = $nbElement / $nbElementPage;
-    $nbPages= ceil($nbPages);
+    $nbPages = ceil($nbPages);
     return $nbPages;
 }
 
@@ -26,25 +26,60 @@ function donnees_page($page, $nbPages, $nbElementPage)
     return $offset;
 }
 
+// Récupération de l'id de l'auteur
+function getIduser($email)
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT id FROM utilisateurs WHERE email = :email');
+    $req->bindParam(':email', $email, PDO::PARAM_STR);
+    $req->execute();
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees['id'];
+}
+
+// Récupération de l'email de l'utilisateur grâce à son id
+function getEmailuser($id)
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT email FROM utilisateurs WHERE id = :id');
+    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees['email'];
+}
+
+// Création d'un utilisateur si adresse mail valide pour utilisation gravatar
+function createUser($email, $nom = NULL)
+{
+    global $bdd;
+    $req = $bdd->prepare('INSERT INTO utilisateurs(nom, email)
+                                     VALUES(:nom, :email)');
+    $req->bindParam(':nom', $nom, PDO::PARAM_STR);
+    $req->bindParam(':email', $email, PDO::PARAM_STR);
+    $req->execute();
+    $req->closeCursor();
+}
+
 // Vérification de la validité de l'adresse mail, retourne NULL si invalide
 function verifEmail($email)
 {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-    {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $email = NULL;
     }
     return $email;
 }
 
 // Récupération du gravatar grâce à l'email, renvoie un avatar par défaut si non existant
-function get_gravatar( $email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts = array() ) {
+function get_gravatar($email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts = array())
+{
     $url = 'https://www.gravatar.com/avatar/';
-    $url .= md5( strtolower( trim( $email ) ) );
+    $url .= md5(strtolower(trim($email)));
     $url .= "?s=$s&d=$d&r=$r";
-    if ( $img ) {
+    if ($img) {
         $url = '<img src="' . $url . '"';
-        foreach ( $atts as $key => $val )
+        foreach ($atts as $key => $val)
             $url .= ' ' . $key . '="' . $val . '"';
         $url .= ' />';
     }
@@ -53,14 +88,16 @@ function get_gravatar( $email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts 
 
 // Fonctions de cryptage pour mots de passes. Sources www.stackoverflow.com
 
-function encrypt($pure_string, $encryption_key) {
+function encrypt($pure_string, $encryption_key)
+{
     $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
     $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
     $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, $encryption_key, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
     return $encrypted_string;
 }
 
-function decrypt($encrypted_string, $encryption_key) {
+function decrypt($encrypted_string, $encryption_key)
+{
     $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
     $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
     $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
@@ -72,18 +109,14 @@ function controleLogin($user, $login, $password)
 {
     $resultat = false;
 
-    if(empty($login) || empty($password))
-    {
+    if (empty($login) || empty($password)) {
         return false;
-    }
-    else
-    {
+    } else {
         $key = $login . $password;
         $password = encrypt($password, $key);
     }
 
-    if($login == $user['login'] && $password == $user['password'])
-    {
+    if ($login == $user['login'] && $password == $user['password']) {
         $resultat = true;
     }
     return $resultat;

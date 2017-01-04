@@ -1,0 +1,110 @@
+html, body, div, section, article, nav, h1, h2, h3, em, p, li, ul, a {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    margin: 0 auto;
+    background-color: lightslategrey;
+
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: .5em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+p {
+    font-size: 1em;
+}
+
+section h1 {
+    font-size: 1.5em;
+    padding-left: .5em;
+}
+
+#corps_page {
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 1em;
+    background-color: ghostwhite;
+}
+
+#corps_page h1 {
+    margin-left: .7em;
+    padding-top: 1em;
+}
+
+#header_image {
+    margin: 0 auto;
+    background-size: cover;
+    background-image: url('../../../include/images/header.jpg');
+    max-width: 95%;
+    height: 200px;
+    margin-bottom: 2em;
+    position: relative;
+
+}
+
+.menu_navigation {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .3);
+    width: 100%;
+
+}
+
+.menu_navigation a {
+    text-transform: uppercase;
+    color: whitesmoke;
+    text-decoration: none;
+    padding-left: .5em;
+}
+
+.menu_navigation a:hover {
+    color: black;
+    background-color: whitesmoke;
+}
+
+#nouveau_billet {
+}
+
+#nouveau_billet label {
+    display: block;
+    margin-left: .5em;
+}
+
+#nouveau_billet input {
+    width: 400px;
+    margin-bottom: 1em;
+}
+
+#nouveau_billet textarea {
+    resize: none;
+    width: 400px;
+    height: 100px;
+}
+
+#footer {
+    margin-top: 50px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, .3);
+    position: relative;
+    display: flex;
+    align-content: space-between;
+}
+
+#footer section {
+    min-width: 33%;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+
+#footer nav li {
+    list-style-type: none;
+}

@@ -5,6 +5,7 @@ include_once('include/functions.php');
 
 if(!$_SESSION['admin'])
 {
+if (!$_SESSION['admin']) {
     include('modules/admin/controller/connect.php');
 }
 else
