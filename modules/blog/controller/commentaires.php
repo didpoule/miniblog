@@ -1,19 +1,20 @@
 <?php
 // Include des fonctions SQL et Définition des variables
 include_once('modules/blog/model/commentaires.php');
+$modCommentaires = get_modCommentaires();
 $nbCommentairesPage = 10;
 $offset = 0;
 $gravatar = NULL;
 $idAuteur = 0;
 // Vérification de la validité de l'adresse email & si déjà inscrit dans BDD
-if(!empty($_POST['email']))
+if (!empty($_POST['email']))
 {
     $nom = htmlspecialchars($_POST['pseudo']);
     $email = verifEmail($_POST['email']);
-    if($email != NULL)
+    if ($email != NULL)
     {
         $idAuteur = getIduser($email);
-        if($idAuteur == 0)
+        if ($idAuteur == 0)
         {
             createUser($email, $nom);
             $idAuteur = getIduser($email);
@@ -22,12 +23,14 @@ if(!empty($_POST['email']))
 }
 
 // Contrôle des informations envoyées par le formulaire
-if (isset($_GET['billet'])) {
-    if (!empty($_POST['contenu'])) {
+if (isset($_GET['billet']))
+{
+    if (!empty($_POST['contenu']))
+    {
         $billet = htmlspecialchars($_GET['billet']);
         $pseudo = $_POST['pseudo'];
         $contenu = $_POST['contenu'];
-        new_commentaire($billet, $pseudo, $contenu, $idAuteur);
+        new_commentaire($billet, $pseudo, $contenu, $idAuteur, $modCommentaires);
     }
 }
 
@@ -36,7 +39,7 @@ if (isset($_GET['billet'])) {
 $nbCommentaires = get_nbCommentaires($_GET['billet']);
 
 $nbPages = calc_nbPages($nbCommentaires, $nbCommentairesPage);
-if(isset($_GET['pageCom']))
+if (isset($_GET['pageCom']))
 {
     $pageCom = htmlspecialchars($_GET['pageCom']);
     $offset = donnees_page($pageCom, $nbPages, $nbCommentairesPage);
@@ -44,7 +47,8 @@ if(isset($_GET['pageCom']))
 
 // Récupération des commentaires
 $commentaires = get_commentaires(htmlspecialchars($_GET['billet']), $offset, $nbCommentairesPage);
-foreach ($commentaires as $cle => $commentaire) {
+foreach ($commentaires as $cle => $commentaire)
+{
     $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo'], ENT_QUOTES);
     $commentaires[$cle]['date'] = dateFr(htmlspecialchars($commentaire['date_creation']));
     $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));

@@ -1,5 +1,6 @@
 <?php
 
+// Ecriture d'un nouveau billet
 function newBillet($titre, $contenu, $auteur)
 {
     global $bdd;
@@ -13,6 +14,7 @@ function newBillet($titre, $contenu, $auteur)
     $req->closeCursor();
 }
 
+// modification d'un billet
 function editBillet($id, $titre, $contenu)
 {
     global $bdd;
@@ -24,11 +26,55 @@ function editBillet($id, $titre, $contenu)
     $req->closeCursor();
 }
 
+// suppression d'un billet
 function deleteBillet($id)
 {
     global $bdd;
     $req = $bdd->prepare('DELETE FROM billets WHERE id = :id');
     $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+    $req->closeCursor();
+}
+
+// suppression d'un commentaire
+function deleteCommentaire($id)
+{
+    global $bdd;
+    $req = $bdd->prepare('DELETE FROM commentaires WHERE id = :id');
+    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+    $req->closeCursor();
+}
+
+// validation d'un commentaire
+function validerCommentaire($id)
+{
+    global $bdd;
+    $req = $bdd->prepare('UPDATE commentaires SET afficher = 1 WHERE id = :id');
+    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+    $req->closeCursor();
+}
+
+// Récupération des commentaires en attente de validation
+function getComAttente()
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT id, id_billet, id_auteur, pseudo, contenu, date_creation 
+                                    FROM commentaires WHERE afficher = 0');
+    $req->execute();
+    $donnees = $req->fetchAll();
+    $req->closeCursor();
+    return $donnees;
+}
+
+// Modification d'un paramètre
+function changeParam($param, $valeur)
+{
+    global $bdd;
+    $req = $bdd->prepare('UPDATE parametres SET valeur = :valeur WHERE nom = :param');
+    $req->bindParam(':param', $param);
+    $req->bindParam(':valeur', $valeur, PDO::PARAM_INT);
     $req->execute();
     $req->closeCursor();
 }

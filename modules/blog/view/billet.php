@@ -1,7 +1,7 @@
 <section>
     <?php
     // Todo: Afficher nom de l'auteur du billet
-    if(!isset($_GET['section'])) {
+    if (!isset($_GET['section'])) {
         foreach ($billets as $billet) {
             ?>
             <div class="news">
@@ -20,10 +20,7 @@
             </div>
             <?php
         }
-    }
-
-    elseif($_GET['section'] == 'commentaires')
-    { ?>
+    } elseif ($_GET['section'] == 'commentaires') { ?>
         <div class="news">
             <h2><?= $billet['titre'] ?></h2>
             <p>

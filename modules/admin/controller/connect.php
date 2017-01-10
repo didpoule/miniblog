@@ -2,8 +2,8 @@
 $login = NULL;
 $password = NULL;
 include('modules/admin/model/connect.php');
-
-if(isset($_POST['login']) && isset($_POST['password']))
+// Contr$ole du login et du mot de passe
+if (isset($_POST['login']) && isset($_POST['password']))
 {
     $admin = getAdmin();
     $login = htmlspecialchars($_POST['login']);

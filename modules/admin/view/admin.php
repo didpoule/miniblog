@@ -10,19 +10,20 @@
 <div id="corps_page">
     <?php include('modules/blog/view/header.php'); ?>
     <section id="menu_admin">
+
         <nav class="menu_billets">
             <h1>Gestion des billet: </h1>
             <ul>
-                <li><a href="?section=admin&page=nouveauBillet">Ecrire un nouveau billet</a></li>
-                <li><a href="?section=admin&page=modifierBillet">Modifier/supprimer un billet existant</a></li>
+                <li><a href="?section=admin&menu=nouveauBillet">Ecrire un nouveau billet</a></li>
+                <li><a href="?section=admin&menu=modifierBillet">Modifier/supprimer un billet existant</a></li>
             </ul>
         </nav>
         <nav class="menu_commentaires">
             <h1>Gestion des commentaires: </h1>
             <ul>
-                <li><a href="?section=admin&page=supprimerCommentaire">Supprimer un commentaire</a></li>
-                <li><a href="?section=admin&page=parametresCommentaires">Changer la façon dont les commentaires sont
-                        validés</a></li>
+                <li><a href="?section=admin&menu=paramCommentaire">Activer/Désactiver validation automatique</a></li>
+                <li><a href="?section=admin&menu=validerCommentaire">Valider des commentaires</a></li>
+                <li><a href="?section=admin&menu=supprimerCommentaire">Supprimer des commentaires</a></li>
             </ul>
         </nav>
     </section>

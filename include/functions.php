@@ -14,12 +14,16 @@ function donnees_page($page, $nbPages, $nbElementPage)
     $page = htmlspecialchars($page);
     $offset = 0;
     $i = 0;
-    if ($page < 0) {
+    if ($page < 0)
+    {
         $page = 0;
-    } elseif ($page >= $nbPages) {
+    }
+    elseif ($page >= $nbPages)
+    {
         $page = $nbPages - 1;
     }
-    while ($i < $page) {
+    while ($i < $page)
+    {
         $offset += $nbElementPage;
         $i++;
     }
@@ -65,7 +69,8 @@ function createUser($email, $nom = NULL)
 function verifEmail($email)
 {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+    {
         $email = NULL;
     }
     return $email;
@@ -77,7 +82,8 @@ function get_gravatar($email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts =
     $url = 'https://www.gravatar.com/avatar/';
     $url .= md5(strtolower(trim($email)));
     $url .= "?s=$s&d=$d&r=$r";
-    if ($img) {
+    if ($img)
+    {
         $url = '<img src="' . $url . '"';
         foreach ($atts as $key => $val)
             $url .= ' ' . $key . '="' . $val . '"';
@@ -87,7 +93,6 @@ function get_gravatar($email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts =
 }
 
 // Fonctions de cryptage pour mots de passes. Sources www.stackoverflow.com
-
 function encrypt($pure_string, $encryption_key)
 {
     $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
@@ -108,24 +113,27 @@ function decrypt($encrypted_string, $encryption_key)
 function controleLogin($user, $login, $password)
 {
     $resultat = false;
-
-    if (empty($login) || empty($password)) {
+    if (empty($login) || empty($password))
+    {
         return false;
-    } else {
+    }
+    else
+    {
         $key = $login . $password;
         $password = encrypt($password, $key);
     }
 
-    if ($login == $user['login'] && $password == $user['password']) {
+    if ($login == $user['login'] && $password == $user['password'])
+    {
         $resultat = true;
     }
     return $resultat;
 }
 
+// Conversion de la date au format FR
 function dateFr($date)
 {
     $dateFr = new DateTime($date);
     $dateFr = $dateFr->format('d/m/Y à H:i:s');
-
     return $dateFr;
 }

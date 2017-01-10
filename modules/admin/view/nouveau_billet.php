@@ -11,7 +11,7 @@
     <?php include('modules/blog/view/header.php'); ?>
     <section id="nouveau_billet">
         <h1>Ecrire un nouveau billet</h1>
-        <form action="?section=admin&page=nouveauBillet" method="post">
+        <form action="?section=admin&menu=nouveauBillet" method="post">
             <label for="titre">Entrez un titre: </label><input type="text" name="titre" id="titre"><br/>
             <label for="contenu">Ecrivez votre billet: </label><textarea name="contenu"
                                                                          id="contenu"></textarea><br/>

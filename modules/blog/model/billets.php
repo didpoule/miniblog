@@ -1,5 +1,4 @@
 <?php
-// Todo: modifier requètes pour récupérer le nom de l'auteur
 
 // Récupération du nombre de billets
 function get_nbBillets()
@@ -9,7 +8,7 @@ function get_nbBillets()
     $req->execute();
     $donnees = $req->fetch();
     $nbBillets = $donnees['nbBillets'];
-
+    $req->closeCursor();
     return $nbBillets;
 }
 
@@ -26,8 +25,7 @@ function get_billets($offset, $nbBilletsPage)
     $req->bindParam(':limit', $nbBilletsPage, PDO::PARAM_INT);
     $req->execute();
     $billets = $req->fetchAll();
-
-
+    $req->closeCursor();
     return $billets;
 }
 
@@ -41,6 +39,6 @@ function get_billet($id_billet)
                                     WHERE b.id = ?');
     $req->execute(array($id_billet));
     $billet = $req->fetch();
-
+    $req->closeCursor();
     return $billet;
 }

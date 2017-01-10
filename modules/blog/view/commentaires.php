@@ -24,14 +24,14 @@
             ?>
             <div class="commentaire">
                 <div class="avatar"><?= $commentaire['gravatar'] ?></div>
-                <h2><?= $commentaire['pseudo'] ?><span class="sous_titre"> dit:</span> </h2>
+                <h2><?= $commentaire['pseudo'] ?><span class="sous_titre"> dit:</span></h2>
                 <p>
                 <span class="date_publication">
                     <em>le <?= $commentaire['date'] ?></em>
                 </span>
                 </p>
                 <p>
-                    <?= $commentaire['contenu']?>
+                    <?= $commentaire['contenu'] ?>
                 </p>
 
             </div>
@@ -43,7 +43,7 @@
 
     <?php if ($nbPages > 1) { ?>
 
-        <nav class = "page_select">
+        <nav class="page_select">
             <p><span>Pages: </span>
                 <?php
                 for ($i = 0; $i < $nbPages; $i++) {
@@ -57,7 +57,7 @@
         <form id="new_com" method="post" action="../../../index.php?section=commentaires&billet=<?= $billet['id'] ?>">
             <label for="pseudo">Pseudo: </label><input type="text" name="pseudo" id="pseudo"/><br/>
             <label for="email">Email: </label><input type="email" name="email" id="email"/><br />
-            <label for="contenu">Votre commentaire: *</label><textarea name="contenu" id="contenu"></textarea><br/>
+            <label for="contenu">Votre commentaire: *</label><textarea name="contenu" id="contenu"></textarea><br />
             <input type="submit" name="envoyer" id="envoyer" value="Envoyer"/>
         </form>
     </section>
