@@ -1,4 +1,5 @@
 <?php
+$errmsg = 0;
 // Include et Définitions des variables
 include_once('modules/blog/model/billets.php');
 $offset = 0;
@@ -15,12 +16,15 @@ if (isset($_GET['page']))
 }
 // Récupération de la liste des billets
 $billets = get_billets($offset, $nbBilletsPage);
-foreach ($billets as $cle => $billet)
+if($billets)
 {
-    $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
-    $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
-    $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-    $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+    foreach ($billets as $cle => $billet)
+    {
+        $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
+        $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
+        $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
+        $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+    }
 }
 
 // Affichage

@@ -14,7 +14,6 @@
 
     if($_GET['menu'] != 'paramCommentaire')
     {
-        if (!isset($_GET['action'])) {
             foreach ($commentaires as $commentaire) {
                 ?>
                 <h3>
@@ -53,7 +52,6 @@
                 <?php
             }
         }
-    }
     elseif($_GET['menu'] === 'paramCommentaire')
     { ?>
         <form method="post" action="?section=admin&menu=paramCommentaire&action=changeParam">

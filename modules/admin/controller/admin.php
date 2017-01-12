@@ -30,12 +30,15 @@ if ($_SESSION['admin']) {
                 if (!isset($_GET['action']))
                 {
                     $billets = get_billets($offset, $nbBilletsPage);
-                    foreach ($billets as $cle => $billet)
+                    if ($billets)
                     {
-                        $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
-                        $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
-                        $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-                        $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+                        foreach ($billets as $cle => $billet)
+                        {
+                            $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
+                            $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
+                            $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
+                            $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+                        }
                     }
                 }
                 // si on a cliqué sur un billet
@@ -43,23 +46,25 @@ if ($_SESSION['admin']) {
                 {
                     if ($_GET['action'] == 'afficher')
                     {
-                        if(isset($_POST['modifier']))
+                        if (isset($_POST['modifier']))
                         {
                             editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
                         }
-                        if(isset($_POST['supprimer']))
+                        if (isset($_POST['supprimer']))
                         {
                             deleteBillet($_POST['id_billet']);
                             header('Location: ../..?section=admin&menu=modifierBillet');
                         }
                         $billet = get_billet($_GET['billet']);
-                        $billet['titre'] = htmlspecialchars($billet['titre']);
-                        $billet['date'] = dateFr(htmlspecialchars($billet['date_creation']));
-                        $billet['auteur'] = htmlspecialchars($billet['auteur']);
-                        $billet['contenu'] = htmlspecialchars($billet['contenu']);
-                        $billet['id'] = (int)($billet['id']);
+                        if ($billet)
+                        {
+                            $billet['titre'] = htmlspecialchars($billet['titre']);
+                            $billet['date'] = dateFr(htmlspecialchars($billet['date_creation']));
+                            $billet['auteur'] = htmlspecialchars($billet['auteur']);
+                            $billet['contenu'] = htmlspecialchars($billet['contenu']);
+                            $billet['id'] = (int)($billet['id']);
+                        }
                     }
-
                 }
                 include('modules/admin/view/billets.php');
                 break;
@@ -85,7 +90,7 @@ if ($_SESSION['admin']) {
                 if(!isset($_POST['valider']) && !isset($_POST['supprimer']))
                 {
                     $commentaires = getComAttente();
-                    if($commentaires != NULL)
+                    if($commentaires)
                     {
                         foreach ($commentaires as $cle => $commentaire)
                         {
@@ -124,12 +129,15 @@ if ($_SESSION['admin']) {
                 if(!isset($_POST['supprimer']))
                 {
                     $commentaires = get_commentairesAll($offset, $nbCommentairesPage);
-                    foreach ($commentaires as $cle => $commentaire)
+                    if ($commentaires)
                     {
-                        $commentaires[$cle]['id_billet'] = $commentaire['id_billet'];
-                        $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo'], ENT_QUOTES);
-                        $commentaires[$cle]['date'] = dateFr(htmlspecialchars($commentaire['date_creation']));
-                        $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
+                        foreach ($commentaires as $cle => $commentaire)
+                        {
+                            $commentaires[$cle]['id_billet'] = $commentaire['id_billet'];
+                            $commentaires[$cle]['pseudo'] = htmlspecialchars($commentaire['pseudo'], ENT_QUOTES);
+                            $commentaires[$cle]['date'] = dateFr(htmlspecialchars($commentaire['date_creation']));
+                            $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
+                        }
                     }
                 }
                 else

@@ -30,8 +30,8 @@
             <form method="post" action="">
                 <input type="hidden" name="id_billet" value="<?= $billet['id'] ?>"/>
                 <label for="titre">Titre: </label><input type="text" name="titre" id="titre" value="<?= $billet['titre'] ?>"/>
-                <label for="contenu">Contenu: </label><textarea name="contenu" id="contenu"><?= $billet['contenu']?></textarea>
-                <input type="submit" name="modifier" id="modifier" value="modifier"/>
+                <label for="contenu">Contenu: </label><textarea name="contenu" id="contenu"><?= $billet['contenu']?></textarea><br />
+                <input type="submit" name="modifier" id="modifier" value="modifier"/><br />
                 <input type="submit" name="supprimer" id ="supprimer" value="supprimer "/>
             </form>
         </section>
