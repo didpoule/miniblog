@@ -1,51 +1,45 @@
-html, body, div, section, article, nav, h1, h2, h3, em, p, li, ul, a
-{
+html, body, div, section, article, nav, h1, h2, h3, em, p, li, ul, a {
     margin: 0;
     padding: 0;
 }
 
-
-body
-{
+body {
     width: 100%;
     margin: 0 auto;
     background-color: lightslategrey;
 
 }
 
-h1
-{
+h1 {
     font-size: 2em;
     margin-bottom: .5em;
 }
 
-h2
-{
+h2 {
     font-size: 1.5em;
 }
 
-p
-{
+p {
     font-size: 1em;
 }
-section h1
-{
+
+section h1 {
     font-size: 1.5em;
     padding-left: .5em;
 }
-#corps_page
-{
+
+#corps_page {
     margin: 0 auto;
     width: 50%;
     margin-top: 1em;
     background-color: ghostwhite;
 }
 
-#corps_page h1
-{
+#corps_page h1 {
     margin-left: .7em;
     padding-top: 1em;
 }
+
 #header_image {
     margin: 0 auto;
     background-size: cover;
@@ -56,134 +50,129 @@ section h1
     position: relative;
 
 }
-.menu_navigation
-{
+
+.menu_navigation {
     position: absolute;
     bottom: 0;
     background-color: rgba(0, 0, 0, .3);
     width: 100%;
 
 }
-.menu_navigation a
-{
+
+.menu_navigation a {
     text-transform: uppercase;
     color: whitesmoke;
     text-decoration: none;
     padding-left: .5em;
 }
-.menu_navigation a:hover
-{
+
+.menu_navigation a:hover {
     color: black;
     background-color: whitesmoke;
 }
-.news
-{
+
+.news {
     text-align: left;
     width: 95%;
     padding-left: 2em;
 }
-.date_publication
-{
+
+.date_publication {
     font-size: .9em;
     font-style: oblique;
     color: darkgrey;
     margin-bottom: 0;
 }
-.contenu_billet, .contenu_billet a
-{
+
+.contenu_billet, .contenu_billet a {
     padding-left: .5em;
 }
-.news p
-{
+
+.news p {
     margin-bottom: 1em;
 }
 
-.commentaire
-{
+.commentaire {
     text-align: left;
     width: 50%;
     padding-left: 2em;
     margin-bottom: 2em;
 }
-.avatar
-{
+
+.avatar {
     float: left;
 }
-.commentaire h2
-{
+
+.commentaire h2 {
     font-size: 1em;
     margin-left: 65px;
 }
-.commentaire .sous_titre
-{
+
+.commentaire .sous_titre {
     font-weight: normal;
     font-style: oblique;
     padding: 0;
 }
-.commentaire p
-{
+
+.commentaire p {
     margin-left: 65px;
     margin-bottom: .5em;
 }
-.page_select
-{
+
+.page_select {
     margin: 0 auto;
     width: 10%;
 }
-nav
-{
+
+nav {
     display: flex;
     justify-content: flex-start;
 }
 
-#Commentaires .page_select
-{
+#Commentaires .page_select {
     margin: 0;
     text-align: left;
 }
-span
-{
+
+span {
     text-align: left;
 }
 
-#footer
-{
+#footer {
     margin-top: 50px;
     height: 100px;
     background-color: rgba(0, 0, 0, .3);
     position: relative;
     display: flex;
-    align-content:space-between;
+    align-content: space-between;
 }
 
-#footer section
-{
+#footer section {
     min-width: 33%;
     padding-top: 1em;
     padding-left: 1em;
 }
-#footer nav li
-{
+
+#footer nav li {
     list-style-type: none;
 }
-#new_com
-{
+
+#new_com {
     width: 50%;
     padding-left: 2em;
 }
-#new_com label
-{
+
+#new_com label {
     display: block;
     margin-left: .5em;
 }
 
-#new_com input
-{
+#new_com input {
     width: 250px;
     margin-bottom: 1em;
 }
-#new_com textarea
-{
+
+#new_com textarea {
     resize: none;
     width: 250px;
     height: 100px;

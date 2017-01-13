@@ -3,7 +3,7 @@
     <div id="header_image">
         <div class="menu_navigation">
             <nav>
-                <a href="/">Accueil</a>
+                <a href="http://192.168.0.51:81">Accueil</a>
             </nav>
         </div>
     </div>

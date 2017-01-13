@@ -15,6 +15,7 @@
             <label for="titre">Entrez un titre: </label><input type="text" name="titre" id="titre"><br/>
             <label for="contenu">Ecrivez votre billet: </label><textarea name="contenu"
                                                                          id="contenu"></textarea><br/>
+            <input type="hidden" name="token" value="<?= $token ?>" />
             <input type="submit" name="envoyer" id="envoyer" value="Envoyer"/>
         </form>
     </section>

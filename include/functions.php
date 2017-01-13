@@ -137,3 +137,30 @@ function dateFr($date)
     $dateFr = $dateFr->format('d/m/Y à H:i:s');
     return $dateFr;
 }
+// Géneration de token
+function generer_token($nom = '')
+{
+    $token = uniqid(rand(), true);
+    $_SESSION[$nom.'_token'] = $token;
+    $_SESSION[$nom.'_token_time'] = time();
+    return $token;
+}
+// Contrôle de token
+function verifier_token($temps, $referer, $nom = '')
+{
+    $result = false;
+    if(isset($_SESSION[$nom.'_token']) && isset($_SESSION[$nom.'_token_time']) && isset($_POST['token']))
+    {
+        if($_SESSION[$nom.'_token'] == $_POST['token'])
+        {
+            if($_SESSION[$nom.'_token_time'] >= (time() - $temps))
+            {
+                if($_SERVER['HTTP_REFERER'] == $referer)
+                {
+                    $result = true;
+                }
+            }
+        }
+    }
+    return $result;
+}

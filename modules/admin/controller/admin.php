@@ -5,10 +5,22 @@ if ($_SESSION['admin']) {
         switch ($_GET['menu']):
             // Ecriture d'un nouveau billet
             case 'nouveauBillet':
-                if (isset($_POST['titre']) && isset($_POST['contenu']))
+                if(!isset($_POST['envoyer']))
                 {
-                    newBillet($_POST['titre'], $_POST['contenu'], $_SESSION['userID']);
-                    header('Location: ../..?section=admin&menu=modifierBillet');
+                    $token = generer_token('newBillet');
+                }
+
+                else
+                {
+                    if (isset($_POST['titre']) && isset($_POST['contenu']))
+                    {
+
+                        if (verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=nouveauBillet', 'newBillet'))
+                        {
+                            newBillet($_POST['titre'], $_POST['contenu'], $_SESSION['userID']);
+                            header('Location: ../..?section=admin&menu=modifierBillet');
+                        }
+                    }
                 }
                 include('modules/admin/view/nouveau_billet.php');
                 break;
@@ -46,14 +58,22 @@ if ($_SESSION['admin']) {
                 {
                     if ($_GET['action'] == 'afficher')
                     {
-                        if (isset($_POST['modifier']))
+                        if(!isset($_POST['modifier']) && !isset($_POST['supprimer']))
                         {
-                            editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
+                            $token = generer_token('modifBillet');
                         }
-                        if (isset($_POST['supprimer']))
+                        if (isset($_POST['modifier']) || isset($_POST['supprimer']))
                         {
-                            deleteBillet($_POST['id_billet']);
-                            header('Location: ../..?section=admin&menu=modifierBillet');
+                            if(verifier_token(600,
+                            'http://192.168.0.51:81/?section=admin&menu=modifierBillet&action=afficher&billet=' . $_POST['id_billet'],
+                            'modifBillet'))
+                            {
+                                if (isset($_POST['modifier'])) editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
+                                if (isset($_POST['supprimer'])) deleteBillet($_POST['id_billet']);
+                                header('Location: ../..?section=admin&menu=modifierBillet');
+                            }
+
+
                         }
                         $billet = get_billet($_GET['billet']);
                         if ($billet)
@@ -73,22 +93,28 @@ if ($_SESSION['admin']) {
             case 'paramCommentaire':
                 if(!isset($_POST['modifier']))
                 {
+                    $token = generer_token('adminCom');
                     header('Location ../..?section=admin&menu=paramCommentaire');
                 }
                 else
                 {
-                    $param = 'modeValidationCommentaires';
-                    $valeur = 1;
-                    if(isset($_POST['validation']))
+                    if(verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=paramCommentaire', 'adminCom'))
                     {
-                        $valeur = 0;
+                        $param = 'modeValidationCommentaires';
+                        $valeur = 1;
+                        if(isset($_POST['validation']))
+                        {
+                            $valeur = 0;
+                        }
+                        changeParam($param, $valeur);
                     }
-                    changeParam($param, $valeur);
+
                 }
             // Affichage des commentaires en attente pour validation ou suppression
             case 'validerCommentaire':
                 if(!isset($_POST['valider']) && !isset($_POST['supprimer']))
                 {
+                    $token = generer_token('adminCom');
                     $commentaires = getComAttente();
                     if($commentaires)
                     {
@@ -101,15 +127,24 @@ if ($_SESSION['admin']) {
                         }
                     }
                 }
-                elseif(isset($_POST['valider']) && !isset($_POST['supprimer']))
+                if(isset($_POST['valider']) || isset($_POST['supprimer']))
                 {
-                    validerCommentaire($_GET['commentaire']);
-                    header('Location: ../..?section=admin&menu=validerCommentaire');
-                }
-                else
-                {
-                    deleteCommentaire($_GET['commentaire']);
-                    header('Location: ../..?section=admin&menu=validerCommentaire');
+                    if(verifier_token(600,
+                                    'http://192.168.0.51:81/?section=admin&menu=validerCommentaire',
+                                    'adminCom'))
+                    {
+
+                        if(isset($_POST['valider']))
+                        {
+                            validerCommentaire($_POST['commentaire']);
+                            header('Location: ../..?section=admin&menu=validerCommentaire');
+                        }
+                        if(isset($_POST['supprimer']))
+                        {
+                            deleteCommentaire($_GET['commentaire']);
+                            header('Location: ../..?section=admin&menu=validerCommentaire');
+                        }
+                    }
                 }
                 include('modules/admin/view/commentaires.php');
                 break;
@@ -128,6 +163,7 @@ if ($_SESSION['admin']) {
                 }
                 if(!isset($_POST['supprimer']))
                 {
+                    $token = generer_token('adminCom');
                     $commentaires = get_commentairesAll($offset, $nbCommentairesPage);
                     if ($commentaires)
                     {
@@ -142,8 +178,11 @@ if ($_SESSION['admin']) {
                 }
                 else
                 {
-                    deleteCommentaire($_GET['commentaire']);
-                    header('Location: ../..?section=admin&menu=supprimerCommentaire');
+                    if(verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=supprimerCommentaire', 'adminCom'))
+                    {
+                        deleteCommentaire($_GET['commentaire']);
+                        header('Location: ../..?section=admin&menu=supprimerCommentaire');
+                    }
                 }
                 include('modules/admin/view/commentaires.php');
                 break;

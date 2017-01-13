@@ -7,26 +7,27 @@
 </head>
 
 <body>
-    <div id ="corps_page">
-        <?php
-        include 'header.php';
-        include 'billet.php';
-        if ($nbPages > 1)
-        {
+<div id="corps_page">
+    <?php
+    include 'header.php';
+    include 'billet.php';
+    if ($nbPages > 1) 
+    {
         ?>
-        <div class = "page_select">
+        <div class="page_select">
             <nav>
                 <p>Pages: <?php
-                    for($i = 0; $i < $nbPages; $i++) {
+                    for ($i = 0; $i < $nbPages; $i++) 
+		    {
                         echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
                     }
                     ?></p>
             </nav>
         </div>
         <?php
-        }
-        include 'footer.php';
-        ?>
-    </div>
+    }
+    include 'footer.php';
+    ?>
+</div>
 </body>
 </html>

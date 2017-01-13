@@ -17,7 +17,8 @@
         <section>
             <h1>Commentaires: </h1>
             <?php
-            if ($nbCommentaires == 0) {
+            if (!$nbCommentaires)
+            {
                 echo '<div class="commentaire"><p>Pas encore de commentaires...</p></div>';
             }
 
@@ -72,7 +73,7 @@
 
             <?php } ?>
             <form id="new_com" method="post"
-                  action="../../../index.php?section=commentaires&billet=<?= $billet['id'] ?>">
+                  action="../../../?section=commentaires&billet=<?= $billet['id'] ?>">
                 <label for="pseudo">Pseudo: </label><input type="text" name="pseudo" id="pseudo"/><br/>
                 <label for="email">Email: </label><input type="email" name="email" id="email"/><br/>
                 <label for="contenu">Votre commentaire: *</label><textarea name="contenu" id="contenu"></textarea><br/>
