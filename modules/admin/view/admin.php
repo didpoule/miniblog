@@ -10,7 +10,6 @@
 <div id="corps_page">
     <?php include('modules/blog/view/header.php'); ?>
     <section id="menu_admin">
-
         <nav class="menu_billets">
             <h1>Gestion des billet: </h1>
             <ul>

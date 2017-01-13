@@ -1,5 +1,4 @@
 <?php
-
 // Retourne nombre de pages
 function calc_nbPages($nbElement, $nbElementPage)
 {
@@ -28,6 +27,25 @@ function donnees_page($page, $nbPages, $nbElementPage)
         $i++;
     }
     return $offset;
+}
+// Selecteur de pages
+function pageSelector($nbPages, $url = NULL)
+{
+
+echo '<nav class="page_select">
+                <p><span>Pages: </span>';
+                    for ($i = 0; $i < $nbPages; $i++)
+                    {
+                        if(!$url)
+                        {
+                            echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
+                        }
+                        else
+                        {
+                            echo '<ul><a href="' . $url . '&page=' . $i . '">' . $i . '</a>/</ul>';
+                        }
+                    }
+echo '</p></nav>';
 }
 
 // Récupération de l'id de l'auteur

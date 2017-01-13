@@ -12,9 +12,9 @@
     include 'modules/blog/view/header.php';
     include 'modules/blog/view/billet.php';
     if($errmsg != 1) {
-
         ?>
         <section>
+
             <h1>Commentaires: </h1>
             <?php
             if (!$nbCommentaires)
@@ -44,17 +44,12 @@
 
         </section>
 
-        <?php if ($nbPages > 1) { ?>
-
-            <nav class="page_select">
-                <p><span>Pages: </span>
-                    <?php
-                    for ($i = 0; $i < $nbPages; $i++) {
-                        echo '<ul><a href ="?section=commentaires&billet=' . $billet['id'] . '&pageCom=' . $i . '">' . $i . '</a>/</ul>';
-                    }
-                    ?></p>
-            </nav>
-        <?php } ?>
+        <?php
+        if ($nbPages > 1)
+        {
+             pageSelector($nbPages, $_COOKIE['url']);
+        }
+        ?>
         <section>
             <h1>Ajouter un commentaire: </h1>
             <?php

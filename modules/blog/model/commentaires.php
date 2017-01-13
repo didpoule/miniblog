@@ -13,11 +13,11 @@ function get_modCommentaires()
 }
 
 // Récupération nombre de commentaires pour un billet
-function get_nbCommentaires($billet = '*')
+function get_nbCommentaires()
 {
     global $bdd;
-    $req = $bdd->prepare('SELECT COUNT(*) AS nbCommentaires FROM commentaires WHERE id_billet = ? AND afficher = 1');
-    $req->execute(array($billet));
+    $req = $bdd->prepare('SELECT COUNT(*) AS nbCommentaires FROM commentaires WHERE afficher = 1');
+    $req->execute();
     $donnees = $req->fetch();
     $nbCommentaires = $donnees['nbCommentaires'];
     $req->closeCursor();

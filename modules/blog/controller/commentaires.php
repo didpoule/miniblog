@@ -12,7 +12,10 @@ if(isset($_POST['ok']))
 {
     header('Refresh:0');
 }
-
+if(isset($_GET['billet']))
+{
+    $_COOKIE['url'] .= '&billet=' . $_GET['billet'];
+}
 // Contrôle des informations envoyées par le formulaire
 if (isset($_GET['billet']) && isset($_POST['envoyer']))
 {
@@ -48,10 +51,10 @@ if (isset($_GET['billet']) && isset($_POST['envoyer']))
 $nbCommentaires = get_nbCommentaires($_GET['billet']);
 
 $nbPages = calc_nbPages($nbCommentaires, $nbCommentairesPage);
-if (isset($_GET['pageCom']))
+if (isset($_GET['page']))
 {
-    $pageCom = htmlspecialchars($_GET['pageCom']);
-    $offset = donnees_page($pageCom, $nbPages, $nbCommentairesPage);
+    $page = htmlspecialchars($_GET['page']);
+    $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
 }
 
 // Récupération des commentaires

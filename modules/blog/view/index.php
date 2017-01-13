@@ -13,19 +13,9 @@
     include 'billet.php';
     if ($nbPages > 1) 
     {
-        ?>
-        <div class="page_select">
-            <nav>
-                <p>Pages: <?php
-                    for ($i = 0; $i < $nbPages; $i++) 
-		    {
-                        echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
-                    }
-                    ?></p>
-            </nav>
-        </div>
-        <?php
+        pageSelector($nbPages);
     }
+
     include 'footer.php';
     ?>
 </div>

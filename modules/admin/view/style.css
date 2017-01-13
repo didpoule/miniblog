@@ -108,3 +108,34 @@ section h1 {
 #footer nav li {
     list-style-type: none;
 }
+.page_select {
+    margin: 0 auto;
+    width: 10%;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#Commentaires .page_select {
+    margin: 0;
+    text-align: left;
+}
+
+span {
+    text-align: left;
+}
+#menu_admin nav h1
+{
+    margin-right: 2em;
+
+}
+#menu_admin nav ul
+{
+    text-align: left;
+}
+#menu_admin nav li
+{
+    list-style-type: none;
+}

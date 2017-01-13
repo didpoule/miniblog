@@ -56,12 +56,24 @@ function validerCommentaire($id)
     $req->closeCursor();
 }
 
+function getnbComAttente()
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT COUNT(*) AS nbCommentaires FROM commentaires WHERE afficher = 0');
+    $req->execute();
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees['nbCommentaires'];
+}
 // Récupération des commentaires en attente de validation
-function getComAttente()
+function getComAttente($offset, $nbCommentairesPage)
 {
     global $bdd;
     $req = $bdd->prepare('SELECT id, id_billet, id_auteur, pseudo, contenu, date_creation 
-                                    FROM commentaires WHERE afficher = 0');
+                                    FROM commentaires WHERE afficher = 0
+                                    ORDER BY date_creation DESC LIMIT :offset, :limit');
+    $req->bindParam(':offset', $offset, PDO::PARAM_INT);
+    $req->bindParam(':limit', $nbCommentairesPage, PDO::PARAM_INT);
     $req->execute();
     $donnees = $req->fetchAll();
     $req->closeCursor();

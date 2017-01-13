@@ -2,6 +2,7 @@
 if ($_SESSION['admin']) {
     include('modules/admin/model/admin.php');
     if (isset($_GET['menu'])) {
+        $_COOKIE['url'] .= '&menu=' . $_GET['menu'];
         switch ($_GET['menu']):
             // Ecriture d'un nouveau billet
             case 'nouveauBillet':
@@ -15,7 +16,7 @@ if ($_SESSION['admin']) {
                     if (isset($_POST['titre']) && isset($_POST['contenu']))
                     {
 
-                        if (verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=nouveauBillet', 'newBillet'))
+                        if (verifier_token(600, $serUrl . '/?section=admin&menu=nouveauBillet', 'newBillet'))
                         {
                             newBillet($_POST['titre'], $_POST['contenu'], $_SESSION['userID']);
                             header('Location: ../..?section=admin&menu=modifierBillet');
@@ -29,7 +30,7 @@ if ($_SESSION['admin']) {
             case 'modifierBillet':
                 include('modules/blog/model/billets.php');
                 $offset = 0;
-                $nbBilletsPage = 10;
+                $nbBilletsPage = 5;
                 $nbBillets = get_nbBillets();
                 $nbPages = calc_nbPages($nbBillets, $nbBilletsPage);
                 $page = 0;
@@ -65,7 +66,7 @@ if ($_SESSION['admin']) {
                         if (isset($_POST['modifier']) || isset($_POST['supprimer']))
                         {
                             if(verifier_token(600,
-                            'http://192.168.0.51:81/?section=admin&menu=modifierBillet&action=afficher&billet=' . $_POST['id_billet'],
+                                $serUrl . '/?section=admin&menu=modifierBillet&action=afficher&billet=' . $_POST['id_billet'],
                             'modifBillet'))
                             {
                                 if (isset($_POST['modifier'])) editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
@@ -94,11 +95,10 @@ if ($_SESSION['admin']) {
                 if(!isset($_POST['modifier']))
                 {
                     $token = generer_token('adminCom');
-                    header('Location ../..?section=admin&menu=paramCommentaire');
                 }
                 else
                 {
-                    if(verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=paramCommentaire', 'adminCom'))
+                    if(verifier_token(600, $serUrl . '/?section=admin&menu=paramCommentaire', 'adminCom'))
                     {
                         $param = 'modeValidationCommentaires';
                         $valeur = 1;
@@ -108,14 +108,30 @@ if ($_SESSION['admin']) {
                         }
                         changeParam($param, $valeur);
                     }
-
+                    header('Location: ' . $serUrl .  '/?section=admin&menu=paramCommentaire');
                 }
+                include('modules/admin/view/commentaires.php');
+                break;
             // Affichage des commentaires en attente pour validation ou suppression
             case 'validerCommentaire':
+                $offset = 0;
+                $nbCommentairesPage = 10;
+                $nbCommentaires = getnbComAttente();
+                $nbPages = calc_nbPages($nbCommentaires, $nbCommentairesPage);
+                $page = 0;
+                if (isset($_GET['page']))
+                {
+                    $page = htmlspecialchars($_GET['page']);
+                    $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
+                }
+                else
+                {
+                    header('Location: ' . $serUrl .  '/?section=admin&menu=validerCommentaire&page=0');
+                }
                 if(!isset($_POST['valider']) && !isset($_POST['supprimer']))
                 {
                     $token = generer_token('adminCom');
-                    $commentaires = getComAttente();
+                    $commentaires = getComAttente($offset, $nbCommentairesPage);
                     if($commentaires)
                     {
                         foreach ($commentaires as $cle => $commentaire)
@@ -130,19 +146,19 @@ if ($_SESSION['admin']) {
                 if(isset($_POST['valider']) || isset($_POST['supprimer']))
                 {
                     if(verifier_token(600,
-                                    'http://192.168.0.51:81/?section=admin&menu=validerCommentaire',
+                        $serUrl . '/?section=admin&menu=validerCommentaire&page=' . $page,
                                     'adminCom'))
                     {
 
                         if(isset($_POST['valider']))
                         {
                             validerCommentaire($_POST['commentaire']);
-                            header('Location: ../..?section=admin&menu=validerCommentaire');
+                            header('Location: ' . $serUrl .  '/?section=admin&menu=validerCommentaire');
                         }
                         if(isset($_POST['supprimer']))
                         {
                             deleteCommentaire($_GET['commentaire']);
-                            header('Location: ../..?section=admin&menu=validerCommentaire');
+                            header('Location: ' . $serUrl .  '/?section=admin&menu=validerCommentaire');
                         }
                     }
                 }
@@ -152,7 +168,7 @@ if ($_SESSION['admin']) {
             case 'supprimerCommentaire':
                 include('modules/blog/model/commentaires.php');
                 $offset = 0;
-                $nbCommentairesPage = 20;
+                $nbCommentairesPage = 10;
                 $nbCommentaires = get_nbCommentaires();
                 $nbPages = calc_nbPages($nbCommentaires, $nbCommentairesPage);
                 $page = 0;
@@ -160,6 +176,10 @@ if ($_SESSION['admin']) {
                 {
                     $page = htmlspecialchars($_GET['page']);
                     $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
+                }
+                else
+                {
+                    header('Location: ' . $serUrl .  '/?section=admin&menu=supprimerCommentaire&page=0');
                 }
                 if(!isset($_POST['supprimer']))
                 {
@@ -178,10 +198,10 @@ if ($_SESSION['admin']) {
                 }
                 else
                 {
-                    if(verifier_token(600, 'http://192.168.0.51:81/?section=admin&menu=supprimerCommentaire', 'adminCom'))
+                    if(verifier_token(600, $serUrl . '/?section=admin&menu=supprimerCommentaire&page=' . $page, 'adminCom'))
                     {
                         deleteCommentaire($_GET['commentaire']);
-                        header('Location: ../..?section=admin&menu=supprimerCommentaire');
+                        header('Location: ' . $serUrl .  '/?section=admin&menu=supprimerCommentaire');
                     }
                 }
                 include('modules/admin/view/commentaires.php');
@@ -200,5 +220,5 @@ if ($_SESSION['admin']) {
 }
 else
 {
-    header('Location: ?section=admin');
+    header('Location: ' . $serUrl .  '/section=admin');
 }

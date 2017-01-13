@@ -1,19 +1,24 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin'])) $_SESSION['admin'] = false;
-include_once('include/sql.php');
-include_once('include/functions.php');
+$serUrl = 'http://';
+$serUrl .= $_SERVER['HTTP_HOST'];
+$_COOKIE['url'] = $_SERVER['HTTP_HOST'];
+require('include/connexion_sql.php');
+require('include/functions.php');
 
-if (isset($_GET['section'])) {
-    switch ($_GET['section']) {
+if (isset($_GET['section']))
+{
+    $_COOKIE['url'] = '?section=' . $_GET['section'];
+
+    switch ($_GET['section'])
+    {
         case 'commentaires':
             include('modules/blog/controller/commentaires.php');
             break;
-
         case 'admin':
             include('modules/admin/index.php');
             break;
-
         default:
             include('error.php');
             break;

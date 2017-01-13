@@ -38,7 +38,10 @@
         </section>
 
     <?php }
-
+    if($nbPages > 1)
+    {
+        pageSelector($nbPages, $_COOKIE['url']);
+    }
     include('modules/blog/view/footer.php'); ?>
 </div>
 </body>

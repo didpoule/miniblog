@@ -52,6 +52,10 @@
                     <br />
                     <?php
                     }
+                    if($nbPages > 1)
+                    {
+                        pageSelector($nbPages, $_COOKIE['url']);
+                    }
                 }
                 else echo 'Aucun commentaire à afficher.';
             }
