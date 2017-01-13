@@ -2,15 +2,25 @@
 $login = NULL;
 $password = NULL;
 include('modules/admin/model/connect.php');
-// Contr$ole du login et du mot de passe
-if (isset($_POST['login']) && isset($_POST['password']))
+$admin = getAdmin();
+// Contrôle du login et du mot de passe
+if($admin)
 {
-    $admin = getAdmin();
-    $login = htmlspecialchars($_POST['login']);
-    $password = htmlspecialchars($_POST['password']);
-    $_SESSION['admin'] = controleLogin($admin, $login, $password);
-    if ($_SESSION['admin']) $_SESSION['userID'] = getIduser($admin['email']);
-
-
+    if (isset($_POST['login']) && isset($_POST['password']))
+    {
+        $login = htmlspecialchars($_POST['login']);
+        $password = htmlspecialchars($_POST['password']);
+        $_SESSION['admin'] = controleLogin($admin, $login, $password);
+        if ($_SESSION['admin'])
+        {
+            $_SESSION['userID'] = getIduser($admin['email']);
+        }
+    }
+    include('modules/admin/view/connect.php');
 }
-include('modules/admin/view/connect.php');
+else
+{
+    $_SESSION['adminTemp'] = true;
+    header('Location: ' . $serUrl  . '/?section=admin&menu=paramAdmin');
+}
+

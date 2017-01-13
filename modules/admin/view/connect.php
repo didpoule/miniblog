@@ -19,7 +19,9 @@
             <input type='submit' value='Connexion'>
         </p>
     </form>
-<?php } else header('Location: ?section=admin');
+<?php
+}
+else header('Location: ?section=admin');
 ?>
 </body>
 </html>

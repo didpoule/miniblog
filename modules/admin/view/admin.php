@@ -10,6 +10,7 @@
 <div id="corps_page">
     <?php include('modules/blog/view/header.php'); ?>
     <section id="menu_admin">
+        <a href="?section=admin&menu=paramAdmin">Modifier paramètres de connexion</a>
         <nav class="menu_billets">
             <h1>Gestion des billet: </h1>
             <ul>

@@ -126,7 +126,12 @@ function decrypt($encrypted_string, $encryption_key)
     $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
     return $decrypted_string;
 }
-
+function keyGenerator($param1, $param2)
+{
+    $key = NULL;
+    $key = encrypt($param1, $param2);
+    return $key;
+}
 // Vérification du mot de passe pour la connexion
 function controleLogin($user, $login, $password)
 {
@@ -137,7 +142,7 @@ function controleLogin($user, $login, $password)
     }
     else
     {
-        $key = $login . $password;
+        $key = keyGenerator($login, '0123456789');
         $password = encrypt($password, $key);
     }
 

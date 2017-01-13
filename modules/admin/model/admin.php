@@ -1,4 +1,20 @@
 <?php
+// Fonction pour définir un admin
+function setAdmin($user, $pass, $email)
+{
+    global $bdd;
+    $req = $bdd->prepare('INSERT INTO admin(id, login, email, password)
+                                    VALUES(1 ,:login, :email, :password)
+                                    ON DUPLICATE KEY UPDATE
+                                     login = :login,
+                                     email = :email,
+                                     password = :password');
+    $req->bindParam(':login', $user, PDO::PARAM_STR);
+    $req->bindParam(':email', $email, PDO::PARAM_STR);
+    $req->bindParam(':password', $pass, PDO::PARAM_STR);
+    $req->execute();
+    $req->closeCursor();
+}
 
 // Ecriture d'un nouveau billet
 function newBillet($titre, $contenu, $auteur)
