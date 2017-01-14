@@ -7,6 +7,11 @@
 </head>
 
 <body>
+<?php
+if($errmsg)
+{
+    echo getErrMsg($errmsg);
+}?>
     <h1>Modification de l'administrateur</h1>
     <form method='post' action="?section=admin&menu=paramAdmin">
         <p>

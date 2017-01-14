@@ -187,3 +187,52 @@ function verifier_token($temps, $referer, $nom = '')
     }
     return $result;
 }
+
+function getErrMsg($errMsg = 0)
+{
+    switch ($errMsg):
+        case 1:
+            return 'Ce billet n\'existe pas.';
+            break;
+
+        case 2:
+            return 'Cette page n\'existe pas.';
+            break;
+
+        case 3:
+            return 'Le commentaire n\'a pas été envoyé car il était vide.';
+            break;
+
+        case 4:
+            return 'Erreur: Les informations saisies ne sont pas correctes.';
+            break;
+
+        case 5:
+            return 'Le billet n\'a pas été créé car il ne contient pas de titre ou de contenu.';
+            break;
+
+        case 6:
+            return 'Aucun compte administrateur trouvé, veuillez remplir le formulaire pour le définir.';
+            break;
+
+        case 7:
+            return 'Veuillez remplir tous les champs.';
+            break;
+
+        case 8:
+            return 'Le token a expiré, l\'opération n\'a pas été effectuée.';
+            break;
+
+        case 9:
+            return 'Aucun billet à afficher.';
+            break;
+
+        case 10:
+            return 'Aucun commentaire à afficher.';
+            break;
+        default:
+            return NULL;
+            break;
+
+    endswitch;
+}

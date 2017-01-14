@@ -23,8 +23,12 @@ if($billets)
         $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
         $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
         $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-        $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+        $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenuCoupe']));
     }
+}
+else
+{
+    $errmsg = 9;
 }
 
 // Affichage

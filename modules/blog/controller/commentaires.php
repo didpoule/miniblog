@@ -26,6 +26,7 @@ if (isset($_GET['billet']) && isset($_POST['envoyer']))
         if ($email)
         {
             $idAuteur = getIduser($email);
+            echo 'test';
             if (!$idAuteur)
             {
                 createUser($email, $nom);
@@ -70,6 +71,10 @@ if($commentaires)
         $commentaires[$cle]['gravatar'] = nl2br(get_gravatar($commentaire['email']));
     }
 }
+else
+{
+    $errmsg = 10;
+}
 // Récupération du billet à afficher pour les commentaires
 
 include_once('modules/blog/model/billets.php');
@@ -79,10 +84,13 @@ if($billet)
     $billet['titre'] = htmlspecialchars($billet['titre']);
     $billet['date'] = dateFr(htmlspecialchars($billet['date_creation']));
     $billet['auteur'] = htmlspecialchars($billet['auteur']);
-    $billet['contenu'] = htmlspecialchars($billet['contenu']);
+    $billet['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
     $billet['id'] = (int)($billet['id']);
 }
-else $errmsg = 1;
+else
+{
+    $errmsg = 1;
+}
 
 // Affichage
  include_once('modules/blog/view/commentaires.php');

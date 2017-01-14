@@ -1,12 +1,19 @@
 <?php
 if ($_SESSION['admin'] || $_SESSION['adminTemp'])
 {
+    $errmsg = 0;
+    if($_SESSION['adminTemp'])
+    {
+        $errmsg = 6;
+    }
     include('modules/admin/model/admin.php');
     if (isset($_GET['menu'])) {
         $_COOKIE['url'] .= '&menu=' . $_GET['menu'];
         switch ($_GET['menu']):
             default:
-                include('modules/admin/view/admin.php');
+                $errmsg = 1;
+                include('error.php');
+                break;
             case 'paramAdmin':
                 if(!isset($_POST['changeAdmin']))
                 {
@@ -14,29 +21,43 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                 }
                 else
                 {
-                    if(isset($_POST['login']) && isset($_POST['email']) &&
-                    isset($_POST['password']) && isset($_POST['checkPassword']))
+                    if(($_POST['login']) && ($_POST['email']) &&
+                    ($_POST['password']) && ($_POST['checkPassword']))
                     {
-
                         $login = htmlspecialchars($_POST['login']);
                         $email = verifEmail($_POST['email']);
                         $password = htmlspecialchars($_POST['password']);
                         $checkPassword = htmlspecialchars($_POST['checkPassword']);
-                        if($email && $checkPassword === $password &&
-                        verifier_token(600, $serUrl . '/?section=admin&menu=paramAdmin', 'paramAdmin'))
+                        if($email && $checkPassword === $password)
                         {
-                            $key = keyGenerator($login, '0123456789');
-                            $encryptedPassword = encrypt($password, $key);
-                            setAdmin($login, $encryptedPassword, $email);
-                            echo 'TEST';
-                            $_SESSION['admin'] = false;
-                            if(isset($_SESSION['adminTemp']))
+                            if (verifier_token(600, $serUrl . '/?section=admin&menu=paramAdmin', 'paramAdmin'))
                             {
-                                $_SESSION['adminTemp'] = false;
+                                $key = keyGenerator($login, '0123456789');
+                                $encryptedPassword = encrypt($password, $key);
+                                setAdmin($login, $encryptedPassword, $email);
+                                $_SESSION['admin'] = false;
+                                if (($_SESSION['adminTemp']))
+                                {
+                                    $_SESSION['adminTemp'] = false;
+                                }
+                                header('Location: ' . $serUrl . '/?section=admin');
                             }
-                            header('Location: ' . $serUrl . '/?section=admin');
-
+                            else
+                            {
+                                $errmsg = 8;
+                                header('Refresh:0');
+                            }
                         }
+                        else
+                        {
+                            $errmsg = 4;
+                            $token = generer_token('paramAdmin');
+                        }
+                    }
+                    else
+                    {
+                        $errmsg = 7;
+                        $token = generer_token('paramAdmin');
                     }
                 }
                 include('modules/admin/view/set_admin.php');
@@ -59,6 +80,14 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 newBillet($_POST['titre'], $_POST['contenu'], $_SESSION['userID']);
                                 header('Location: ../..?section=admin&menu=modifierBillet');
                             }
+                            else
+                            {
+                                $errmsg = 8;
+                            }
+                        }
+                        else
+                        {
+                            $errmsg = 5;
                         }
                     }
                     include('modules/admin/view/nouveau_billet.php');
@@ -84,16 +113,22 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                     if (!isset($_GET['action']))
                     {
                         $billets = get_billets($offset, $nbBilletsPage);
-                        if ($billets) {
+                        if ($billets)
+                        {
                             foreach ($billets as $cle => $billet)
                             {
                                 $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
                                 $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
                                 $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-                                $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
+                                $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenuCoupe']));
                             }
                         }
-                    } // si on a cliqué sur un billet
+                        else
+                        {
+                            $errmsg = 9;
+                        }
+                    }
+                    // si on a cliqué sur un billet
                     else
                         {
                         if ($_GET['action'] == 'afficher')
@@ -112,8 +147,10 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                     if (isset($_POST['supprimer'])) deleteBillet($_POST['id_billet']);
                                     header('Location: ../..?section=admin&menu=modifierBillet');
                                 }
-
-
+                                else
+                                {
+                                    $errmsg = 8;
+                                }
                             }
                             $billet = get_billet($_GET['billet']);
                             if ($billet)
@@ -123,6 +160,10 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 $billet['auteur'] = htmlspecialchars($billet['auteur']);
                                 $billet['contenu'] = htmlspecialchars($billet['contenu']);
                                 $billet['id'] = (int)($billet['id']);
+                            }
+                            else
+                            {
+                                $errmsg = 1;
                             }
                         }
                     }
@@ -150,7 +191,11 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                             }
                             changeParam($param, $valeur);
                         }
-                        header('Location: ' . $serUrl . '/?section=admin&menu=paramCommentaire');
+                        else
+                        {
+                            $errmsg = 8;
+                        }
+                        header('Location: ' . $serUrl . '/?section=admin');
                     }
                     include('modules/admin/view/commentaires.php');
                 }
@@ -170,7 +215,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                         $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
                     }
                     else
-                        {
+                    {
                         header('Location: ' . $serUrl . '/?section=admin&menu=validerCommentaire&page=0');
                     }
                     if (!isset($_POST['valider']) && !isset($_POST['supprimer']))
@@ -186,6 +231,10 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 $commentaires[$cle]['date'] = dateFr(htmlspecialchars($commentaire['date_creation']));
                                 $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
                             }
+                        }
+                        else
+                        {
+                            $errmsg = 10;
                         }
                     }
                     if (isset($_POST['valider']) || isset($_POST['supprimer']))
@@ -205,6 +254,10 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 deleteCommentaire($_GET['commentaire']);
                                 header('Location: ' . $serUrl . '/?section=admin&menu=validerCommentaire');
                             }
+                        }
+                        else
+                        {
+                            $errmsg = 8;
                         }
                     }
                     include('modules/admin/view/commentaires.php');
@@ -243,12 +296,21 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 $commentaires[$cle]['contenu'] = nl2br(htmlspecialchars($commentaire['contenu'], ENT_QUOTES));
                             }
                         }
-                    } else
+                        else
                         {
+                            $errmsg = 10;
+                        }
+                    }
+                    else
+                    {
                         if (verifier_token(600, $serUrl . '/?section=admin&menu=supprimerCommentaire&page=' . $page, 'adminCom'))
                         {
                             deleteCommentaire($_GET['commentaire']);
                             header('Location: ' . $serUrl . '/?section=admin&menu=supprimerCommentaire');
+                        }
+                        else
+                        {
+                            $errmsg = 8;
                         }
                     }
                     include('modules/admin/view/commentaires.php');
@@ -260,7 +322,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
 
         endswitch;
     }
-    elseif (!isset($_GET['page']))
+    elseif (!isset($_GET['menu']))
     {
         include('modules/admin/view/admin.php');
     }

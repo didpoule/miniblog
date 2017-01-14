@@ -18,7 +18,7 @@ function get_billets($offset, $nbBilletsPage)
     global $bdd;
     $offset = (int)$offset;
     $nbBilletsPage = (int)$nbBilletsPage;
-    $req = $bdd->prepare('SELECT b.id, b.titre, b.contenu, u.nom AS auteur, b.date_creation 
+    $req = $bdd->prepare('SELECT substring(b.contenu, 1, 100) AS contenuCoupe, b.id, b.titre, u.nom AS auteur, b.date_creation
                           FROM billets b LEFT JOIN utilisateurs u ON u.id = b.id_auteur
                           ORDER BY date_creation DESC LIMIT :offset, :limit');
     $req->bindParam(':offset', $offset, PDO::PARAM_INT);

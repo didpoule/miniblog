@@ -10,7 +10,15 @@
 <div id="corps_page">
     <?php
     include 'header.php';
-    include 'billet.php';
+    if(!$errmsg)
+    {
+        include 'billet.php';
+    }
+    else
+    {
+        echo getErrMsg($errmsg);
+    }
+
     if ($nbPages > 1) 
     {
         pageSelector($nbPages);
