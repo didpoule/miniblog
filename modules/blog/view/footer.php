@@ -1,16 +1,9 @@
 <footer>
     <div id="footer">
         <section>
-            <nav>
-                <ul>
-                    <li><a href="?section=admin">Aministration</a></li>
-                    <li><a href="#">Contact</a></li>
-                <ul>
-
-            </nav>
-        </section>
-        <section>
-            <p>A propos: </p>
+            <p>A propos:<br />
+            Ce blog a été créé dans le cadre d'un projet pour <a href="www.openclassrooms.com">OpenClassRooms</a>
+            </p>
         </section>
 
     </div>

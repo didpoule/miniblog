@@ -11,18 +11,23 @@ if($admin)
     {
         if (!empty(($_POST['login'])) && !empty($_POST['password']))
         {
-
             $login = htmlspecialchars($_POST['login']);
             $password = htmlspecialchars($_POST['password']);
             $_SESSION['admin'] = controleLogin($admin, $login, $password);
             if ($_SESSION['admin'])
             {
                 $_SESSION['userID'] = getIduser($admin['email']);
+                if(!getIduser($admin['email']))
+                {
+                    createUser($admin['email'], $login);
+                }
+                $_SESSION['userID'] = getIduser($admin['email']);
                 header('Location: ' . $serUrl . '/?section=admin');
             }
             else
             {
                 $errmsg = 4;
+
             }
         }
         else

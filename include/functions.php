@@ -1,4 +1,14 @@
 <?php
+
+//Limitation du nombre de caractères à afficher pour une chaîne
+function tronquerChaine($str, $longueur)
+{
+    $str = substr($str, 0, $longueur);
+    $lastchar = strrpos($str, ' ');
+    $str = substr($str, 0,  $lastchar);
+    $str .= '...';
+    return $str;
+}
 // Retourne nombre de pages
 function calc_nbPages($nbElement, $nbElementPage)
 {
@@ -31,21 +41,20 @@ function donnees_page($page, $nbPages, $nbElementPage)
 // Selecteur de pages
 function pageSelector($nbPages, $url = NULL)
 {
-
-echo '<nav class="page_select">
-                <p><span>Pages: </span>';
-                    for ($i = 0; $i < $nbPages; $i++)
-                    {
-                        if(!$url)
-                        {
-                            echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
-                        }
-                        else
-                        {
-                            echo '<ul><a href="' . $url . '&page=' . $i . '">' . $i . '</a>/</ul>';
-                        }
-                    }
-echo '</p></nav>';
+    echo '<nav class="page_select">
+           <p><span>Pages: </span>';
+        for ($i = 0; $i < $nbPages; $i++)
+        {
+            if(!$url)
+            {
+                echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
+            }
+            else
+            {
+                echo '<ul><a href="' . $url . '&page=' . $i . '">' . $i . '</a>/</ul>';
+            }
+        }
+    echo '</p></nav>';
 }
 
 // Récupération de l'id de l'auteur
@@ -83,7 +92,7 @@ function createUser($email, $nom = NULL)
     $req->closeCursor();
 }
 
-// Vérification de la validité de l'adresse mail, retourne NULL si invalide
+// Vérification de la validité de l'adresse mail
 function verifEmail($email)
 {
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -94,7 +103,7 @@ function verifEmail($email)
     return $email;
 }
 
-// Récupération du gravatar grâce à l'email, renvoie un avatar par défaut si non existant
+// Récupération du gravatar grâce à l'email, renvoie un avatar par défaut si non existant source www.gravatar.com
 function get_gravatar($email, $s = 50, $d = 'mm', $r = 'g', $img = true, $atts = array())
 {
     $url = 'https://www.gravatar.com/avatar/';
@@ -126,6 +135,7 @@ function decrypt($encrypted_string, $encryption_key)
     $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, $encryption_key, $encrypted_string, MCRYPT_MODE_ECB, $iv);
     return $decrypted_string;
 }
+
 function keyGenerator($param1, $param2)
 {
     $key = NULL;
@@ -188,6 +198,7 @@ function verifier_token($temps, $referer, $nom = '')
     return $result;
 }
 
+// Messages d'erreur
 function getErrMsg($errMsg = 0)
 {
     switch ($errMsg):

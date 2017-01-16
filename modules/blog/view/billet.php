@@ -17,9 +17,8 @@
                         <p>
                         <span class="contenu_billet">
                             <?= $billet['contenu'] ?><br/>
-                            ...<br />
-                                <em><a href="?section=commentaires&billet=<?= $billet['id'] ?>">Lire la suite et commentaires</a></em>
                         </span>
+                            <em><a href="?section=commentaires&billet=<?= $billet['id'] ?>">Lire la suite et commentaires</a></em>
                         </p>
                     </div>
                     <?php

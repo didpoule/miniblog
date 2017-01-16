@@ -7,6 +7,7 @@ $nbBilletsPage = 5;
 $nbBillets = get_nbBillets();
 $nbPages = calc_nbPages($nbBillets, $nbBilletsPage);
 $page = 0;
+$longueurMax = 100;
 
 // Gestion de la pagination
 if (isset($_GET['page']))
@@ -23,7 +24,7 @@ if($billets)
         $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
         $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
         $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-        $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenuCoupe']));
+        $billets[$cle]['contenu'] = nl2br(tronquerChaine(htmlspecialchars($billet['contenu']), $longueurMax));
     }
 }
 else

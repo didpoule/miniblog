@@ -3,7 +3,8 @@
     <div id="header_image">
         <div class="menu_navigation">
             <nav>
-                <a href="http://192.168.0.51:81">Accueil</a>
+                <a href="<?= $serUrl ?>">Accueil</a>
+                <a href="<?= $serUrl ?>?section=admin">Administration</a>
             </nav>
         </div>
     </div>

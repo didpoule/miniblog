@@ -75,8 +75,8 @@ else
 {
     $errmsg = 10;
 }
-// Récupération du billet à afficher pour les commentaires
 
+// Récupération du billet à afficher pour les commentaires
 include_once('modules/blog/model/billets.php');
 $billet = get_billet($_GET['billet']);
 if($billet)

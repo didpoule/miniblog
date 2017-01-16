@@ -19,7 +19,7 @@
                 ?>
                 <div class="news">
                     <a href="?section=admin&menu=modifierBillet&action=afficher&billet=<?= $billet['id'] ?>">
-                        <h2>ID: [<?= $billet['id'] ?>] <?= $billet['titre']; ?></h2>
+                        <h2><?= $billet['titre']; ?></h2>
                     </a>
                     <p>
                         <span class="date_publication">

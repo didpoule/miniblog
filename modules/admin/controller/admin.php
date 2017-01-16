@@ -2,6 +2,8 @@
 if ($_SESSION['admin'] || $_SESSION['adminTemp'])
 {
     $errmsg = 0;
+    /* Affichage d'un message pour prévenir l'utilisateur qu'il faut créer un admin
+    On a accès à aucun autre menu si on  pas défini d'admin */
     if($_SESSION['adminTemp'])
     {
         $errmsg = 6;
@@ -10,12 +12,18 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
     if (isset($_GET['menu'])) {
         $_COOKIE['url'] .= '&menu=' . $_GET['menu'];
         switch ($_GET['menu']):
+
+            // Affichage du menu par défaut si une valeur inconnue est renseignée
             default:
                 $errmsg = 1;
                 include('error.php');
                 break;
+            case 'deconnexion':
+                $_SESSION['admin'] = false;
+                header('Location: ' . $serUrl);
+                break;
             case 'paramAdmin':
-                if(!isset($_POST['changeAdmin']))
+                if((!isset($_POST['changeAdmin'])))
                 {
                     $token = generer_token('paramAdmin');
                 }
@@ -51,14 +59,16 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                         else
                         {
                             $errmsg = 4;
-                            $token = generer_token('paramAdmin');
                         }
                     }
                     else
                     {
                         $errmsg = 7;
-                        $token = generer_token('paramAdmin');
                     }
+                }
+                if($errmsg == 4 || $errmsg == 7 || $errmsg == 8)
+                {
+                    $token = generer_token('paramAdmin');
                 }
                 include('modules/admin/view/set_admin.php');
                 break;
@@ -120,7 +130,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 $billets[$cle]['titre'] = htmlspecialchars($billet['titre']);
                                 $billets[$cle]['date'] = dateFr(htmlspecialchars($billet['date_creation']));
                                 $billets[$cle]['auteur'] = htmlspecialchars($billet['auteur']);
-                                $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenuCoupe']));
+                                $billets[$cle]['contenu'] = nl2br(htmlspecialchars($billet['contenu']));
                             }
                         }
                         else
@@ -145,7 +155,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 {
                                     if (isset($_POST['modifier'])) editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
                                     if (isset($_POST['supprimer'])) deleteBillet($_POST['id_billet']);
-                                    header('Location: ../..?section=admin&menu=modifierBillet');
+                                    header('Location: ' . $serUrl . '?section=admin&menu=modifierBillet');
                                 }
                                 else
                                 {
@@ -316,10 +326,6 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                     include('modules/admin/view/commentaires.php');
                 }
                 break;
-
-            // Affichage du menu par défaut si une valeur inconnue est renseignée
-
-
         endswitch;
     }
     elseif (!isset($_GET['menu']))
