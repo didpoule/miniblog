@@ -3,8 +3,8 @@
     <div id="header_image">
         <div class="menu_navigation">
             <nav>
-                <a href="<?= $serUrl ?>">Accueil</a>
-                <a href="<?= $serUrl ?>?section=admin">Administration</a>
+                <a href="/">Accueil</a>
+                <a href="?section=admin">Administration</a>
             </nav>
         </div>
     </div>

@@ -9,8 +9,8 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
         $errmsg = 6;
     }
     include('modules/admin/model/admin.php');
+    $baseUrl = setUrl();
     if (isset($_GET['menu'])) {
-        $_COOKIE['url'] .= '&menu=' . $_GET['menu'];
         switch ($_GET['menu']):
 
             // Affichage du menu par défaut si une valeur inconnue est renseignée
@@ -38,7 +38,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                         $checkPassword = htmlspecialchars($_POST['checkPassword']);
                         if($email && $checkPassword === $password)
                         {
-                            if (verifier_token(600, $serUrl . '/?section=admin&menu=paramAdmin', 'paramAdmin'))
+                            if (verifier_token(600, $_SERVER['HTTP_REFERER'], 'paramAdmin'))
                             {
                                 $key = keyGenerator($login, '0123456789');
                                 $encryptedPassword = encrypt($password, $key);
@@ -48,7 +48,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                                 {
                                     $_SESSION['adminTemp'] = false;
                                 }
-                                header('Location: ' . $serUrl . '/?section=admin');
+                                header('Location: ?section=admin');
                             }
                             else
                             {
@@ -85,10 +85,10 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                         {
                         if (isset($_POST['titre']) && isset($_POST['contenu']))
                         {
-                            if (verifier_token(600, $serUrl . '/?section=admin&menu=nouveauBillet', 'newBillet'))
+                            if (verifier_token(600, $_SERVER['HTTP_REFERER'], 'newBillet'))
                             {
                                 newBillet($_POST['titre'], $_POST['contenu'], $_SESSION['userID']);
-                                header('Location: ../..?section=admin&menu=modifierBillet');
+                                header('Location: ?section=admin&menu=modifierBillet');
                             }
                             else
                             {
@@ -149,13 +149,14 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                             }
                             if (isset($_POST['modifier']) || isset($_POST['supprimer']))
                             {
+                                // $_SERVER['HTTP_REFERER']
                                 if (verifier_token(600,
-                                    $serUrl . '/?section=admin&menu=modifierBillet&action=afficher&billet=' . $_POST['id_billet'],
+                                    $_SERVER['HTTP_REFERER'],
                                     'modifBillet'))
                                 {
                                     if (isset($_POST['modifier'])) editBillet($_POST['id_billet'], $_POST['titre'], $_POST['contenu']);
                                     if (isset($_POST['supprimer'])) deleteBillet($_POST['id_billet']);
-                                    header('Location: ' . $serUrl . '?section=admin&menu=modifierBillet');
+                                    header('Location: ?section=admin&menu=modifierBillet');
                                 }
                                 else
                                 {
@@ -250,7 +251,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                     if (isset($_POST['valider']) || isset($_POST['supprimer']))
                     {
                         if (verifier_token(600,
-                            $serUrl . '/?section=admin&menu=validerCommentaire&page=' . $page,
+                            $_SERVER['HTTP_REFERER'],
                             'adminCom'))
                         {
 
@@ -335,5 +336,5 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
 }
 else
 {
-    header('Location: ' . $serUrl .  '/section=admin');
+    header('Location: ?section=admin');
 }

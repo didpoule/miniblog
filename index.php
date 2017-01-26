@@ -8,9 +8,6 @@ if (!isset($_SESSION['admin']))
 {
     $_SESSION['admin'] = false;
 }
-$serUrl = 'http://';
-$serUrl .= $_SERVER['HTTP_HOST'];
-$_COOKIE['url'] = $_SERVER['HTTP_HOST'];
 require('include/connexion_sql.php');
 require('include/functions.php');
     if (isset($_GET['section']))

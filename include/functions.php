@@ -38,20 +38,36 @@ function donnees_page($page, $nbPages, $nbElementPage)
     }
     return $offset;
 }
+function setUrl()
+{
+    $baseUrl = NULL;
+    if(isset($_GET['section']))
+    {
+        $baseUrl .=  '?section='.$_GET['section'];
+        if(isset($_GET['menu']))
+        {
+            $baseUrl .= '&menu='.$_GET['menu'];
+        }
+        elseif(isset($_GET['billet'])) {
+            $baseUrl .= '&billet=' . $_GET['billet'];
+        }
+    }
+    return $baseUrl;
+}
 // Selecteur de pages
-function pageSelector($nbPages, $url = NULL)
+function pageSelector($nbPages, $baseUrl = NULL)
 {
     echo '<nav class="page_select">
            <p><span>Pages: </span>';
         for ($i = 0; $i < $nbPages; $i++)
         {
-            if(!$url)
+            if(!$baseUrl)
             {
                 echo '<ul><a href ="?page=' . $i . '">' . $i . '</a>/</ul>';
             }
             else
             {
-                echo '<ul><a href="' . $url . '&page=' . $i . '">' . $i . '</a>/</ul>';
+                echo '<ul><a href="' . $baseUrl . '&page=' . $i . '">' . $i . '</a>/</ul>';
             }
         }
     echo '</p></nav>';

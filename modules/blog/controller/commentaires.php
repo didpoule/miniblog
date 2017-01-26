@@ -12,10 +12,7 @@ if(isset($_POST['ok']))
 {
     header('Refresh:0');
 }
-if(isset($_GET['billet']))
-{
-    $_COOKIE['url'] .= '&billet=' . $_GET['billet'];
-}
+$baseUrl = setUrl();
 // Contrôle des informations envoyées par le formulaire
 if (isset($_GET['billet']) && isset($_POST['envoyer']))
 {

@@ -22,7 +22,7 @@ if($admin)
                     createUser($admin['email'], $login);
                 }
                 $_SESSION['userID'] = getIduser($admin['email']);
-                header('Location: ' . $serUrl . '/?section=admin');
+                header('Location: ?section=admin');
             }
             else
             {

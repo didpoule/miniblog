@@ -43,7 +43,7 @@
         <?php
             if ($nbPages > 1)
             {
-                pageSelector($nbPages, $_COOKIE['url']);
+                pageSelector($nbPages, $baseUrl);
             }
         }
         ?>
@@ -60,7 +60,7 @@
                     </form>
                 </p>
             <?php } ?>
-            <form id="new_com" method="post" action="../../../?section=commentaires&billet=<?= $billet['id'] ?>">
+            <form id="new_com" method="post">
                 <label for="pseudo">Pseudo: </label><input type="text" name="pseudo" id="pseudo"/><br/>
                 <label for="email">Email: </label><input type="email" name="email" id="email"/><br/>
                 <label for="contenu">Votre commentaire: *</label><textarea name="contenu" id="contenu"></textarea><br/>
