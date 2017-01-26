@@ -34,7 +34,7 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
 
             // Modification d'un billet
             case 'modifierBillet':
-                modifierBillet($errmsg);
+                modifierBillet($errmsg, $baseUrl);
                 break;
 
             // Activation/désactivation de la validation des commentaires par administrateur
@@ -43,11 +43,11 @@ if ($_SESSION['admin'] || $_SESSION['adminTemp'])
                 break;
             // Affichage des commentaires en attente pour validation ou suppression
             case 'validerCommentaire':
-                validationCommentaires($errmsg);
+                validationCommentaires($errmsg, $baseUrl);
                 break;
             // Affichage des commentaires affichés pour suppression
             case 'supprimerCommentaire':
-                supressionCommentaires($errmsg);
+                supressionCommentaires($errmsg, $baseUrl);
                 break;
         endswitch;
     }

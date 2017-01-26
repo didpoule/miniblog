@@ -82,7 +82,7 @@ function nouveauBillet($errmsg)
     }
 }
 
-function modifierBillet($errmsg)
+function modifierBillet($errmsg, $baseUrl)
 {
     if (!$_SESSION['adminTemp']) {
         include('modules/blog/model/billets.php');
@@ -172,7 +172,7 @@ function paramCommentaire($errmsg)
     }
 }
 
-function validationCommentaires($errmsg)
+function validationCommentaires($errmsg, $baseUrl)
 {
     if(!$_SESSION['adminTemp'])
     {
@@ -186,10 +186,7 @@ function validationCommentaires($errmsg)
             $page = htmlspecialchars($_GET['page']);
             $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
         }
-        else
-        {
-            header('Location: ?section=admin&menu=validerCommentaire&page=0');
-        }
+
         if (!isset($_POST['valider']) && !isset($_POST['supprimer']))
         {
             $token = generer_token('adminCom');
@@ -236,7 +233,7 @@ function validationCommentaires($errmsg)
     }
 }
 
-function supressionCommentaires($errmsg)
+function supressionCommentaires($errmsg, $baseUrl)
 {
     if(!$_SESSION['adminTemp'])
     {
@@ -250,10 +247,6 @@ function supressionCommentaires($errmsg)
         {
             $page = htmlspecialchars($_GET['page']);
             $offset = donnees_page($page, $nbPages, $nbCommentairesPage);
-        }
-        else
-        {
-            header('Location: ' . $serUrl . '/?section=admin&menu=supprimerCommentaire&page=0');
         }
         if (!isset($_POST['supprimer']))
         {
@@ -276,10 +269,10 @@ function supressionCommentaires($errmsg)
         }
         else
         {
-            if (verifier_token(600, $serUrl . '/?section=admin&menu=supprimerCommentaire&page=' . $page, 'adminCom'))
+            if (verifier_token(600, $_SERVER['HTTP_REFERER'], 'adminCom'))
             {
                 deleteCommentaire($_GET['commentaire']);
-                header('Location: ' . $serUrl . '/?section=admin&menu=supprimerCommentaire');
+                header('Location: ?section=admin&menu=supprimerCommentaire');
             }
             else
             {

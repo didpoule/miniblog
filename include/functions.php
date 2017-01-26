@@ -48,7 +48,11 @@ function setUrl()
         {
             $baseUrl .= '&menu='.$_GET['menu'];
         }
-        elseif(isset($_GET['billet'])) {
+        if(isset($_GET['action']))
+        {
+            $baseUrl .= '&action='.$_GET['action'];
+        }
+        if(isset($_GET['billet'])) {
             $baseUrl .= '&billet=' . $_GET['billet'];
         }
     }

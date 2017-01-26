@@ -29,6 +29,10 @@
                 </div>
                 <?php
             }
+            if($nbPages > 1)
+            {
+                pageSelector($nbPages, $_COOKIE['url']);
+            }
         }
 
         elseif ($_GET['action'] == 'afficher')
@@ -44,11 +48,6 @@
                 </form>
             </section>
     <?php
-        }
-
-        if($nbPages > 1)
-        {
-            pageSelector($nbPages, $_COOKIE['url']);
         }
     }
     else
