@@ -22,14 +22,14 @@ function donnees_page($page, $nbPages, $nbElementPage)
 {
     $page = htmlspecialchars($page);
     $offset = 0;
-    $i = 0;
-    if ($page < 0)
+    $i = 1;
+    if ($page <= 0)
     {
-        $page = 0;
+        $page = 1;
     }
-    elseif ($page >= $nbPages)
+    elseif ($page > $nbPages)
     {
-        $page = $nbPages - 1;
+        $page = $nbPages;
     }
     while ($i < $page)
     {
@@ -59,7 +59,7 @@ function pageSelector($nbPages, $baseUrl = NULL)
 {
     echo '<nav class="page_select">
            <p><span>Pages: </span>';
-        for ($i = 0; $i < $nbPages; $i++)
+        for ($i = 1; $i <= $nbPages; $i++)
         {
             if(!$baseUrl)
             {
