@@ -1,18 +1,6 @@
 <?php
 
 // Récupération nombre de commentaires
-function get_modCommentaires()
-{
-    global $bdd;
-    $param = 'modeValidationCommentaires';
-    $req = $bdd->prepare('SELECT valeur FROM parametres WHERE nom = :param');
-    $req->bindParam(':param', $param);
-    $req->execute();
-    $donnees = $req->fetch();
-    return $donnees['valeur'];
-}
-
-// Récupération nombre de commentaires pour un billet
 function get_nbCommentaires()
 {
     global $bdd;

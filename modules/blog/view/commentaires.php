@@ -10,7 +10,7 @@
 <div id="corps_page">
     <?php
     include 'modules/blog/view/header.php';
-    if(!$errmsg || $errmsg == 10)
+    if(!$errmsg || $errmsg == 10 || $errmsg == 11 || $errmsg == 3)
     {
         include 'modules/blog/view/billet.php';
     }
@@ -50,28 +50,10 @@
         <section>
             <h1>Ajouter un commentaire: </h1>
         <?php
-            if($errmsg == 3)
+            if($errmsg == 3 || $errmsg == 11)
             {
-        ?>
-                <p>
-                    Votre commentaire n'a pas été envoyé car il était vide.
-                    <form method="post">
-                        <input type="submit" name="ok" value="Fermer" />
-                    </form>
-                </p>
-        <?php
-            }
-            elseif($enAttente)
-            {
-        ?>
-                <p>
-                    Votre commentaire a bien été envoyé, cependant il doit être validé par un administrateur
-                    pour être affiché.
-                <form method="post">
-                    <input type="submit" name="ok" value="Fermer" />
-                </form>
-                </p>
-            <?php
+                echo getErrMsg($errmsg);
+                closePopup();
             }
         ?>
             <form id="new_com" method="post">

@@ -53,7 +53,8 @@
         elseif($_GET['menu'] === 'paramCommentaire')
         { ?>
             <form method="post" action="?section=admin&menu=paramCommentaire&action=changeParam">
-                <label for="validation">Activer validation des commentaires par administrateur</label><input type="checkbox" name="validation" /><br />
+                <label for="validation">Activer validation des commentaires par administrateur</label>
+                <input type="checkbox" name="validation" <?php if(getParam('modeValidationCommentaires')){echo 'checked="checked"';}?>/><br />
                 <input type="hidden" name="token" value="<?= $token ?>" />
                 <input type="submit" name="modifier" value="Valider" />
             </form>

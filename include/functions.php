@@ -225,7 +225,7 @@ function getParam($param)
     $req->execute();
     $donnees = $req->fetch();
     $req->closeCursor();
-    return $donnees;
+    return $donnees['valeur'];
 }
 // Messages d'erreur
 function getErrMsg($errMsg = 0)
@@ -270,9 +270,22 @@ function getErrMsg($errMsg = 0)
         case 10:
             return 'Aucun commentaire à afficher.';
             break;
+
+        case 11:
+            return 'Votre commentaire a bien été envoyé, cependant il doit être validé par un administrateur
+                    pour être affiché.';
+            break;
         default:
             return NULL;
             break;
 
     endswitch;
+}
+
+function closePopup()
+{
+    echo '
+                <form method="post">
+                    <input type="submit" name="ok" value="Fermer" />
+                </form>';
 }

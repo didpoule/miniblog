@@ -155,10 +155,10 @@ function paramCommentaire($errmsg)
             if (verifier_token(600,  $_SERVER['HTTP_REFERER'], 'adminCom'))
             {
                 $param = 'modeValidationCommentaires';
-                $valeur = 1;
+                $valeur = 0;
                 if (isset($_POST['validation']))
                 {
-                    $valeur = 0;
+                    $valeur = 1;
                 }
                 changeParam($param, $valeur);
             }
