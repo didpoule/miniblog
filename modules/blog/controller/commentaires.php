@@ -7,6 +7,7 @@ $nbCommentairesPage = 10;
 $offset = 0;
 $gravatar = NULL;
 $idAuteur = 0;
+$enAttente = false;
 
 if(isset($_POST['ok']))
 {
@@ -23,7 +24,6 @@ if (isset($_GET['billet']) && isset($_POST['envoyer']))
         if ($email)
         {
             $idAuteur = getIduser($email);
-            echo 'test';
             if (!$idAuteur)
             {
                 createUser($email, $nom);
@@ -41,6 +41,10 @@ if (isset($_GET['billet']) && isset($_POST['envoyer']))
     else
     {
         $errmsg = 3;
+    }
+    if(getParam('modeValidationCommentaires'))
+    {
+        $enAttente = true;
     }
 }
 

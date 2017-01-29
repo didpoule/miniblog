@@ -217,7 +217,16 @@ function verifier_token($temps, $referer, $nom = '')
     }
     return $result;
 }
-
+function getParam($param)
+{
+    global $bdd;
+    $req = $bdd->prepare('SELECT valeur FROM parametres WHERE nom = :param');
+    $req->bindParam(':param', $param);
+    $req->execute();
+    $donnees = $req->fetch();
+    $req->closeCursor();
+    return $donnees;
+}
 // Messages d'erreur
 function getErrMsg($errMsg = 0)
 {

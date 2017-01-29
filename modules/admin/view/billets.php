@@ -31,7 +31,7 @@
             }
             if($nbPages > 1)
             {
-                pageSelector($nbPages, $_COOKIE['url']);
+                pageSelector($nbPages, $baseUrl);
             }
         }
 

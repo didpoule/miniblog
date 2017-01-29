@@ -49,17 +49,31 @@
         ?>
         <section>
             <h1>Ajouter un commentaire: </h1>
-            <?php
+        <?php
             if($errmsg == 3)
             {
-            ?>
+        ?>
                 <p>
                     Votre commentaire n'a pas été envoyé car il était vide.
                     <form method="post">
                         <input type="submit" name="ok" value="Fermer" />
                     </form>
                 </p>
-            <?php } ?>
+        <?php
+            }
+            elseif($enAttente)
+            {
+        ?>
+                <p>
+                    Votre commentaire a bien été envoyé, cependant il doit être validé par un administrateur
+                    pour être affiché.
+                <form method="post">
+                    <input type="submit" name="ok" value="Fermer" />
+                </form>
+                </p>
+            <?php
+            }
+        ?>
             <form id="new_com" method="post">
                 <label for="pseudo">Pseudo: </label><input type="text" name="pseudo" id="pseudo"/><br/>
                 <label for="email">Email: </label><input type="email" name="email" id="email"/><br/>
